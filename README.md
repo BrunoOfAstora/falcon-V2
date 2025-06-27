@@ -21,7 +21,8 @@ Após compilar o Falcon, você poderá executar os seguintes comandos diretament
 | `falcon save .`                  | Salva o hash de todos os arquivos no diretório atual |
 | `falcon --md5 <arquivo>`           | Calcula o hash **MD5** de um arquivo             |
 | `falcon --sha256 <arquivo>`        | Calcula o hash **SHA-256**                      |
-| `falcon --sha384 <arquivo>`        | Calcula o hash **SHA-384**                      |
+| `falcon --sha384 <arquivo>`        | Calcula o hash **SHA-384**                       |    
+| `falcon --sha512 <arquivo>`        | Calcula o hash **SHA-512**                       |
 | `falcon --rmdup(breve)`                   | Remove arquivos duplicados no diretório atual   |
 | `falcon --verify(breve)`                  | Verifica integridade com base nos hashes salvos (Parcial) |
 | `falcon --help` ou `falcon -h`   | Exibe o menu de ajuda                           |
@@ -73,6 +74,10 @@ O binário `falcon` será gerado na pasta raiz do projeto.
 - [ ] Suporte a outros algoritmos de hash (ex: SHA-512)
 - [ ] Melhorias no parser de argumentos CLI
 - [ ] Outros...
+      
+      
+
+
       
       
 

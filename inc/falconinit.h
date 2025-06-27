@@ -3,13 +3,21 @@
 
 #include <getopt.h>
 #include <unistd.h>
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
 #include <openssl/evp.h>
 
 #define FILE_HASH_BUF_SIZE 4096
+#define FILE_NAME_BUFFER_SIZE_ 128
+#define FILE_HASH_BUFFER_SIZE_ 256
+#define FULL_PATH_SIZE_ 512
 
 typedef struct FalconHashInit
 {
@@ -29,6 +37,19 @@ typedef struct FalconHashInit
 	char *hex_hash_result;//----------------------------->Stores the result of given hash
 	
 }flcn_init;
+
+
+
+typedef struc FalconSaveInit
+{
+	
+
+}flcn_save_init;
+
+
+//		******************
+//		**HASH Functions**
+//		******************
 
 //Returns the MD5 hash of the file passed
 char *flcn_md5_hash(const char *usr_in);
