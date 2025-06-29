@@ -61,7 +61,8 @@ O binário `falcon` será gerado na pasta raiz do projeto.
 - ✅ Cálculo de hash **MD5**
 - ✅ Cálculo de hash **SHA-256**
 - ✅ Cálculo de hash **SHA-384**
-- ✅ Cálculo de hash **SHA-512** 
+- ✅ Cálculo de hash **SHA-512**
+- ✅ Salvamento de hashes e nomes de arquivos em um Banco de Dados para posterior verificação
 - ✅ Remoção de duplicatas no diretório atual(Disponível em breve)
 - ✅ Verificação parcial de integridade (compare hashes salvos)(Disponível em breve)
 - ✅ Interface de ajuda via `--help` e `-h`
@@ -74,10 +75,6 @@ O binário `falcon` será gerado na pasta raiz do projeto.
 - [ ] Suporte a outros algoritmos de hash (ex: SHA-512)
 - [ ] Melhorias no parser de argumentos CLI
 - [ ] Outros...
-      
-      
-
-
       
       
 
