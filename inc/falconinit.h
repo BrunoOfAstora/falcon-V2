@@ -1,8 +1,12 @@
 #ifndef FALCONINIT_H
 #define FALCONINIT_H
 
+#define _GNU_SOURCE
+
 #include <getopt.h>
+#include <limits.h>
 #include <unistd.h>
+#include <sqlite3.h>
 #include <sqlite3.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -40,11 +44,21 @@ typedef struct FalconHashInit
 
 
 
-typedef struc FalconSaveInit
+typedef struct FalconSaveInit
 {
+	DIR *curr_dir;
 	
+	FILE *file_usr_stream;
 
-}flcn_save_init;
+	char hash_folder_path[PATH_MAX];
+	
+	char full_db_path[PATH_MAX];
+
+	char *f_all_name;
+
+	char *f_hash;
+
+}flcn_save;
 
 
 //		******************
@@ -65,5 +79,15 @@ char *flcn_384_hash(const char *usr_in);
 
 //Returns the SHA512 hash of the file passed
 char *flcn_512_hash(const char *usr_in);
+
+
+
+//		******************
+//		**Save Functions**
+//		******************
+
+//Saves the file name and fiel hash in a DB (SQLite3)
+int save_in_db(char *f_name);
+
 
 #endif

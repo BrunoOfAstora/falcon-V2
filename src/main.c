@@ -21,11 +21,12 @@ int main(int argc, char *argv[])
 			{"sha256", 	required_argument, 	0, '2'},
 			{"sha384", 	required_argument,	0, '3'},
 			{"sha512", 	required_argument,	0, '5'},
+			{"save",    required_argument, 	0, 's'},
 			{"help", 	no_argument,		0, 'h'},
 			{0, 		0, 					0,  0 },
 		};
 
-		opt = getopt_long(argc, argv, "m:2:3:5:h", long_options, &opt_index);
+		opt = getopt_long(argc, argv, "m:2:3:5:s:h", long_options, &opt_index);
 		if(opt == -1)
 				break;
 
@@ -83,6 +84,24 @@ int main(int argc, char *argv[])
 				char *sha512_print = flcn_512_hash(argv[2]);
 				printf("SHA512: %s\n", sha512_print);
 				break;
+
+
+			case 's':
+				if(optarg[0] == '-')
+				{
+					fprintf(stderr, "Error: the 'save' function require a file as argument, but got '%s' as argument instead\n", optarg);
+						exit(EXIT_FAILURE);
+				}
+				
+				int save_func_status = save_in_db(argv[2]);
+				if(save_func_status != 0)
+				{
+					perror("Error in 'save' function. The File Name and File Hash are not saved in Data Base");
+					break;
+				}
+
+				break;
+
 
 			case 'h':
 				printf("Help\n	Options =>\n");

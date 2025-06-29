@@ -6,7 +6,7 @@ INC_DIR = inc
 
 CC = gcc
 CFLAGS = -Wall -Wextra -g -I$(SRC_DIR) -I$(INC_DIR)
-LDFLAGS = -lcrypto
+LDFLAGS = -lcrypto -lsqlite3
 
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
