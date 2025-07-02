@@ -39,6 +39,9 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'm':
+				printf("Calculating Hash MD5...");
+				fflush(stdout);
+
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: md5 option require a file as argument, but got '%s' as argument instead\n", optarg);
@@ -46,11 +49,14 @@ int main(int argc, char *argv[])
 				}
 				
 				char *md5_print = flcn_md5_hash(argv[2]);
+				printf("\033[32mDONE!\033[0m\n");
 				printf("MD5: %s\n", md5_print);	
 				break;
 
 
 			case '2':
+				printf("Calculating SHA256...");
+				fflush(stdout);
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha256 option require a file as argument, but got '%s' as argument instead\n", optarg);
@@ -58,11 +64,15 @@ int main(int argc, char *argv[])
 				}
 			
 				char *sha256_print = flcn_256_hash(argv[2]);
+				printf("\033[32mDONE!\033[0m\n");
 				printf("SHA256: %s\n", sha256_print);
 				break;
 
 
 			case '3':
+				printf("Calculating SHA384...");
+				fflush(stdout);
+
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha384 option require a file as argument, but got '%s' as argument instead\n", optarg);
@@ -70,23 +80,30 @@ int main(int argc, char *argv[])
 				}
 
 				char *sha384_print = flcn_384_hash(argv[2]);
+				printf("\033[32mDONE!\033[0m\n");
 				printf("SHA384: %s\n", sha384_print);
 				break;
 
 
 			case '5':
+				printf("Calculating SHA512...");
+				fflush(stdout);
+
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha512 option require a file as argument, but got '%s' as argument instead\n", optarg);
 						exit(EXIT_FAILURE);
 				}
-
 				char *sha512_print = flcn_512_hash(argv[2]);
+				printf("\033[32mDONE!\033[0m\n");
 				printf("SHA512: %s\n", sha512_print);
 				break;
 
 
 			case 's':
+				printf("Saving Hashes...");
+				fflush(stdout);
+		
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: the 'save' function require a file as argument, but got '%s' as argument instead\n", optarg);
@@ -99,12 +116,19 @@ int main(int argc, char *argv[])
 					perror("Error in 'save' function. The File Name and File Hash are not saved in Data Base");
 					break;
 				}
+				printf("\033[32mOK\033[0m\n");
 
 				break;
 
 
 			case 'h':
-				printf("Help\n	Options =>\n");
+				printf("Help:\n	Options =>\n");
+				printf("-m or --md5				Return hash md5 of file\n");
+				printf("-2 or --sha256			Return hash SHA256 of file\n");
+				printf("-3 or --sha384			Return hash SHA384 of file\n");
+				printf("-5 or --sha512			Return hash SHA512 of file\n");	
+				printf("-s or --save			Save the file name and file hash in the data base\n");
+							
 				break;
 
 			default:

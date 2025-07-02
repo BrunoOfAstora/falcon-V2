@@ -13,15 +13,12 @@ int save_in_db(char *f_name)
 	const char *sql_create = "CREATE TABLE IF NOT EXISTS flcn_hashes (flcn_hashes_id INTEGER PRIMARY KEY, f_name TEXT, f_hash TEXT UNIQUE)";
 	const char *sql_insert = "INSERT OR IGNORE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)";
 
-	char *home_path = getenv("HOME");
-	if(!home_path)
-	{
-		perror("Failed to get HOME directory\n"); //maybe create in current dir if home not found (?)
-		goto end_func;
-	}
-	
-	snprintf(flcn_save->hash_folder_path, sizeof(flcn_save->hash_folder_path), "%s/%s/",home_path, "falcon-hashes");
 
+	if(flcn_SetHashDirInHome(flcn_save->hash_folder_path, sizeof(flcn_save->hash_folder_path)) != 0)
+	{
+		perror("Failed to set a folder in Home Directory for save file hashes.\n");
+		goto end_func;
+	}	
 
 	if(mkdir(flcn_save->hash_folder_path, 0755) == -1)
 	{
@@ -32,10 +29,13 @@ int save_in_db(char *f_name)
 			perror("Error while creating Directory to save hashes\n");
 			goto end_func;
 		}
-
 	}
 
-	snprintf(flcn_save->full_db_path, sizeof(flcn_save->full_db_path), "%s%s", flcn_save->hash_folder_path, "falcon_file_hash.db");
+	if(flcn_CreateDbFile(flcn_save->full_db_path, sizeof(flcn_save->full_db_path)) != 0)
+	{
+		perror("Failed to set a file in Home Directory for save hashes.\n");
+		goto end_func;
+	}
 
 	int sql_op = sqlite3_open_v2(flcn_save->full_db_path, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
 	if(sql_op != SQLITE_OK)

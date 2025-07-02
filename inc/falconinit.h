@@ -1,3 +1,5 @@
+//		falconinit.h
+
 #ifndef FALCONINIT_H
 #define FALCONINIT_H
 
@@ -23,6 +25,17 @@
 #define FILE_HASH_BUFFER_SIZE_ 256
 #define FULL_PATH_SIZE_ 512
 
+
+//		*******************
+//		**General Purpose**
+//		*******************
+
+char *flcn_GetHomeDir();
+
+size_t flcn_SetHashDirInHome(char *out_path, size_t size);
+
+size_t flcn_CreateDbFile(char *out_path, size_t size);
+
 typedef struct FalconHashInit
 {
 
@@ -42,8 +55,6 @@ typedef struct FalconHashInit
 	
 }flcn_init;
 
-
-
 typedef struct FalconSaveInit
 {
 	DIR *curr_dir;
@@ -59,7 +70,6 @@ typedef struct FalconSaveInit
 	char *f_hash;
 
 }flcn_save;
-
 
 //		******************
 //		**HASH Functions**
@@ -88,6 +98,9 @@ char *flcn_512_hash(const char *usr_in);
 
 //Saves the file name and fiel hash in a DB (SQLite3)
 int save_in_db(char *f_name);
+
+
+
 
 
 #endif
