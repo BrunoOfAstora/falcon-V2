@@ -6,7 +6,6 @@ int save_in_db(char *f_name)
 
 	struct FalconSaveInit *flcn_save = malloc( sizeof( struct FalconSaveInit ));
 	struct dirent *dir;
-	struct stat sb;
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 
@@ -14,30 +13,7 @@ int save_in_db(char *f_name)
 	const char *sql_insert = "INSERT OR IGNORE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)";
 
 
-	if(flcn_SetHashDirInHome(flcn_save->hash_folder_path, sizeof(flcn_save->hash_folder_path)) != 0)
-	{
-		perror("Failed to set a folder in Home Directory for save file hashes.\n");
-		goto end_func;
-	}	
-
-	if(mkdir(flcn_save->hash_folder_path, 0755) == -1)
-	{
-		if(stat(flcn_save->hash_folder_path, &sb) == 0 && S_ISDIR(sb.st_mode)){}
-	
-		else
-		{
-			perror("Error while creating Directory to save hashes\n");
-			goto end_func;
-		}
-	}
-
-	if(flcn_CreateDbFile(flcn_save->full_db_path, sizeof(flcn_save->full_db_path)) != 0)
-	{
-		perror("Failed to set a file in Home Directory for save hashes.\n");
-		goto end_func;
-	}
-
-	int sql_op = sqlite3_open_v2(flcn_save->full_db_path, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
+	int sql_op = sqlite3_open_v2(flcn_save_init->full_db_path, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
 	if(sql_op != SQLITE_OK)
 	{
 		fprintf(stderr, "SQLite Error, (OPEN DB): %s\n", sqlite3_errmsg(db));

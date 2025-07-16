@@ -2,6 +2,7 @@
 
 #include "falconinit.h"
 
+
 char *flcn_GetHomeDir()
 {
 	char *path_to_home_dir = getenv("HOME");
@@ -13,6 +14,7 @@ char *flcn_GetHomeDir()
 	
 	return path_to_home_dir;
 }
+
 
 size_t flcn_SetHashDirInHome(char *out_path, size_t size)
 {
@@ -26,6 +28,8 @@ size_t flcn_SetHashDirInHome(char *out_path, size_t size)
 
 	return 0;
 }
+
+
 
 size_t flcn_CreateDbFile(char *out_path, size_t size)
 {

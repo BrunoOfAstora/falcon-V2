@@ -71,6 +71,12 @@ typedef struct FalconSaveInit
 
 }flcn_save;
 
+extern flcn_save *flcn_save_init;
+
+void _save_init();
+
+void _save_deinit(void);
+
 //		******************
 //		**HASH Functions**
 //		******************

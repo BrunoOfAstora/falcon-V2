@@ -4,6 +4,8 @@ int main(int argc, char *argv[])
 {
 	int ret_num = -1;
 
+	_save_init();
+
 	if(argc < 2)
 	{
 		goto end;
@@ -145,6 +147,7 @@ int main(int argc, char *argv[])
 	}
 	
 	exit(EXIT_SUCCESS);
+	_save_deinit();
 	ret_num = 0;
 
 end: //maybe useless for now
