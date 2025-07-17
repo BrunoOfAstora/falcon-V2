@@ -117,16 +117,16 @@ char *flcn_256_hash( const char *usr_in )
 	}
 
 
-	EVP_MD_CTX *md5_ctx = EVP_MD_CTX_new();
-	if(md5_ctx == NULL)
+	EVP_MD_CTX *s256_ctx = EVP_MD_CTX_new();
+	if(s256_ctx == NULL)
 	{
 		perror("Error while creating EVP_MD_CTX_new\n");
 		goto end_func;
 	}
 
 
-	int evp_md5_init = EVP_DigestInit_ex(md5_ctx, EVP_sha256(), NULL);
-	if(!evp_md5_init)
+	int evp_s256_init = EVP_DigestInit_ex(s256_ctx, EVP_sha256(), NULL);
+	if(!evp_s256_init)
 	{
 		perror("Error while initializing SHA256 hash Algorithim\n");
 		goto end_func;
@@ -135,8 +135,8 @@ char *flcn_256_hash( const char *usr_in )
 	
 	while((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), flcn_init->file_usr_stream)) > 0)
 	{
-		int evp_md5_update = EVP_DigestUpdate(md5_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
-		if(!evp_md5_update)
+		int evp_s256_update = EVP_DigestUpdate(s256_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
+		if(!evp_s256_update)
 		{
 			perror("Error While Updating SHA256 Hash\n");
 			goto end_func;
@@ -144,14 +144,14 @@ char *flcn_256_hash( const char *usr_in )
 
 	}
 
-	int evp_md5_digest_final = EVP_DigestFinal_ex(md5_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
-	if(!evp_md5_digest_final)
+	int evp_s256_digest_final = EVP_DigestFinal_ex(s256_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
+	if(!evp_s256_digest_final)
 	{
 		perror("Error Finishing SHA256 Update\n");
 		goto end_func;
 	}
 
-	EVP_MD_CTX_free(md5_ctx);
+	EVP_MD_CTX_free(s256_ctx);
 	fclose(flcn_init->file_usr_stream);
 
 	flcn_init->hex_hash_result = malloc( 2 * flcn_init->hash_md_leng + 1 );
@@ -171,8 +171,8 @@ char *flcn_256_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(md5_ctx)
-		EVP_MD_CTX_free(md5_ctx);
+	if(s256_ctx)
+		EVP_MD_CTX_free(s256_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);
@@ -212,16 +212,16 @@ char *flcn_384_hash( const char *usr_in )
 	}
 
 
-	EVP_MD_CTX *md5_ctx = EVP_MD_CTX_new();
-	if(md5_ctx == NULL)
+	EVP_MD_CTX *s384_ctx = EVP_MD_CTX_new();
+	if(s384_ctx == NULL)
 	{
 		perror("Error while creating EVP_MD_CTX_new\n");
 		goto end_func;
 	}
 
 
-	int evp_md5_init = EVP_DigestInit_ex(md5_ctx, EVP_sha384(), NULL);
-	if(!evp_md5_init)
+	int evp_s384_init = EVP_DigestInit_ex(s384_ctx, EVP_sha384(), NULL);
+	if(!evp_s384_init)
 	{
 		perror("Error while initializing SHA384 hash Algorithim\n");
 		goto end_func;
@@ -230,8 +230,8 @@ char *flcn_384_hash( const char *usr_in )
 	
 	while((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), flcn_init->file_usr_stream)) > 0)
 	{
-		int evp_md5_update = EVP_DigestUpdate(md5_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
-		if(!evp_md5_update)
+		int evp_s384_update = EVP_DigestUpdate(s384_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
+		if(!evp_s384_update)
 		{
 			perror("Error While Updating SHA384 Hash\n");
 			goto end_func;
@@ -239,14 +239,14 @@ char *flcn_384_hash( const char *usr_in )
 
 	}
 
-	int evp_md5_digest_final = EVP_DigestFinal_ex(md5_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
-	if(!evp_md5_digest_final)
+	int evp_s384_digest_final = EVP_DigestFinal_ex(s384_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
+	if(!evp_s384_digest_final)
 	{
 		perror("Error Finishing SHA384 Update\n");
 		goto end_func;
 	}
 
-	EVP_MD_CTX_free(md5_ctx);
+	EVP_MD_CTX_free(s384_ctx);
 	fclose(flcn_init->file_usr_stream);
 
 	flcn_init->hex_hash_result = malloc( 2 * flcn_init->hash_md_leng + 1 );
@@ -266,8 +266,8 @@ char *flcn_384_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(md5_ctx)
-		EVP_MD_CTX_free(md5_ctx);
+	if(s384_ctx)
+		EVP_MD_CTX_free(s384_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);
@@ -306,16 +306,16 @@ char *flcn_512_hash( const char *usr_in )
 	}
 
 
-	EVP_MD_CTX *md5_ctx = EVP_MD_CTX_new();
-	if(md5_ctx == NULL)
+	EVP_MD_CTX *s512_ctx = EVP_MD_CTX_new();
+	if(s512_ctx == NULL)
 	{
 		perror("Error while creating EVP_MD_CTX_new\n");
 		goto end_func;
 	}
 
 
-	int evp_md5_init = EVP_DigestInit_ex(md5_ctx, EVP_sha512(), NULL);
-	if(!evp_md5_init)
+	int evp_s512_init = EVP_DigestInit_ex(s512_ctx, EVP_sha512(), NULL);
+	if(!evp_s512_init)
 	{
 		perror("Error while initializing SHA512 hash Algorithim\n");
 		goto end_func;
@@ -324,8 +324,8 @@ char *flcn_512_hash( const char *usr_in )
 	
 	while((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), flcn_init->file_usr_stream)) > 0)
 	{
-		int evp_md5_update = EVP_DigestUpdate(md5_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
-		if(!evp_md5_update)
+		int evp_s512_update = EVP_DigestUpdate(s512_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
+		if(!evp_s512_update)
 		{
 			perror("Error While Updating SHA512 Hash\n");
 			goto end_func;
@@ -333,14 +333,14 @@ char *flcn_512_hash( const char *usr_in )
 
 	}
 
-	int evp_md5_digest_final = EVP_DigestFinal_ex(md5_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
-	if(!evp_md5_digest_final)
+	int evp_s512_digest_final = EVP_DigestFinal_ex(s512_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
+	if(!evp_s512_digest_final)
 	{
 		perror("Error Finishing SHA512 Update\n");
 		goto end_func;
 	}
 
-	EVP_MD_CTX_free(md5_ctx);
+	EVP_MD_CTX_free(s512_ctx);
 	fclose(flcn_init->file_usr_stream);
 
 	flcn_init->hex_hash_result = malloc( 2 * flcn_init->hash_md_leng + 1 );
@@ -360,8 +360,8 @@ char *flcn_512_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(md5_ctx)
-		EVP_MD_CTX_free(md5_ctx);
+	if(s512_ctx)
+		EVP_MD_CTX_free(s512_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);

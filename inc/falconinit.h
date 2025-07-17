@@ -71,11 +71,14 @@ typedef struct FalconSaveInit
 
 }flcn_save;
 
+
+
 extern flcn_save *flcn_save_init;
 
 void _save_init();
-
 void _save_deinit(void);
+
+
 
 //		******************
 //		**HASH Functions**
@@ -104,6 +107,8 @@ char *flcn_512_hash(const char *usr_in);
 
 //Saves the file name and fiel hash in a DB (SQLite3)
 int save_in_db(char *f_name);
+
+int flcn_verify(const char *f_name);
 
 
 

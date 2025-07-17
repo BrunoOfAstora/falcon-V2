@@ -24,11 +24,12 @@ int main(int argc, char *argv[])
 			{"sha384", 	required_argument,	0, '3'},
 			{"sha512", 	required_argument,	0, '5'},
 			{"save",    required_argument, 	0, 's'},
-			{"help", 	no_argument,		0, 'h'},
+			{"verify", 	required_argument,  0, 'v'},
+			{"help", 	no_argument,		0, 'h'},				
 			{0, 		0, 					0,  0 },
 		};
 
-		opt = getopt_long(argc, argv, "m:2:3:5:s:h", long_options, &opt_index);
+		opt = getopt_long(argc, argv, "m:2:3:5:s:v:h", long_options, &opt_index);
 		if(opt == -1)
 				break;
 
@@ -122,6 +123,25 @@ int main(int argc, char *argv[])
 
 				break;
 
+
+			case 'v':
+				printf("Verifying Hash in DataBase...\n");
+				
+				if(optarg[0] == '-')
+				{
+					fprintf(stderr, "Error: the 'verify' function require a file as argument, but got '%s' as argument instead\n", optarg);
+						exit(EXIT_FAILURE);
+				}
+				
+				int verify_func_status = flcn_verify(argv[2]);
+				if(verify_func_status != 0)
+				{
+					printf("Error while verifying hashes. The file hash mismatch the original file\n");
+						exit(EXIT_FAILURE);
+				}
+				printf("\033[32mOK\033[0m\n");
+
+				break;
 
 			case 'h':
 				printf("Help:\n	Options =>\n");

@@ -4,8 +4,8 @@ int save_in_db(char *f_name)
 {
 	int return_code = 1;
 
-	struct FalconSaveInit *flcn_save = malloc( sizeof( struct FalconSaveInit ));
 	struct dirent *dir;
+	flcn_save *flcn_save = malloc( sizeof *flcn_save );
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 
