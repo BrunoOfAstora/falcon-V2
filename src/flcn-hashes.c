@@ -11,14 +11,14 @@ char *flcn_md5_hash( const char *usr_in )
 
 	if(flcn_init == NULL || usr_in == NULL)
 	{
-		perror("Need to specify the file and initializer\n");
+		printf("Need to specify the file and initializer\n");
 		return NULL;
 	}
 
 	flcn_init->file_usr_stream = fopen(usr_in, "rb");
 	if(!flcn_init->file_usr_stream)
 	{
-		perror("Error while opening file ");
+		printf("Error while opening file\n");
 		goto end_func;
 	}
 
@@ -104,14 +104,14 @@ char *flcn_256_hash( const char *usr_in )
 
 	if(flcn_init == NULL || usr_in == NULL)
 	{
-		perror("Need to specify the file and initializer\\n");
+		printf("Need to specify the file and initializer\\n");
 		return NULL;
 	}
 
 	flcn_init->file_usr_stream = fopen(usr_in, "rb");
 	if(!flcn_init->file_usr_stream)
 	{
-		perror("Error while opening file\n");
+		printf("Error while opening file\n");
 		goto end_func;
 	}
 
@@ -197,14 +197,14 @@ char *flcn_384_hash( const char *usr_in )
 
 	if(flcn_init == NULL || usr_in == NULL)
 	{
-		perror("Need to specify the file and initializer\\n");
+		printf("Need to specify the file and initializer\\n");
 		return NULL;
 	}
 
 	flcn_init->file_usr_stream = fopen(usr_in, "rb");
 	if(!flcn_init->file_usr_stream)
 	{
-		perror("Error while opening file\n");
+		printf("Error while opening file\n");
 		goto end_func;
 	}
 
@@ -296,7 +296,7 @@ char *flcn_512_hash( const char *usr_in )
 	flcn_init->file_usr_stream = fopen(usr_in, "rb");
 	if(!flcn_init->file_usr_stream)
 	{
-		perror("Error while opening file\n");
+		printf("Error while opening file\n");
 		goto end_func;
 	}
 

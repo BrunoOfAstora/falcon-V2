@@ -57,8 +57,17 @@ int main(int argc, char *argv[])
 					printf("The file don't exist or can't be opened\n");
 					return -1;
 				}
+	
+
+				if(md5_print == NULL)
+				{
+					printf("The file don't exist or can't be opened\n");
+					return -1;
+				}
+
 				printf("\033[32mDONE!\033[0m\n");
-				printf("MD5: %s\n", md5_print);	
+				printf("MD5: %s\n", md5_print);
+
 				break;
 
 
@@ -96,7 +105,7 @@ int main(int argc, char *argv[])
 
 				char *sha384_print = flcn_384_hash(argv[2]);
 
-				if(sha256_print == NULL)
+				if(sha384_print == NULL)
 				{
 					printf("The file don't exist or can't be opened\n");
 					return -1;
@@ -118,7 +127,7 @@ int main(int argc, char *argv[])
 				}
 				char *sha512_print = flcn_512_hash(argv[2]);
 
-				if(sha256_print == NULL)
+				if(sha512_print == NULL)
 				{
 					printf("The file don't exist or can't be opened\n");
 					return -1;
