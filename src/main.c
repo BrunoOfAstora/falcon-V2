@@ -167,7 +167,6 @@ int main(int argc, char *argv[])
 					printf("Error while verifying hashes. The file hash mismatch the original file\n");
 						return -1;
 				}
-				printf("\033[32mOK\033[0m\n");
 
 				break;
 

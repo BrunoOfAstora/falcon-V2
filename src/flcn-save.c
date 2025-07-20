@@ -9,7 +9,7 @@ int save_in_db(char *f_name)
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 
-	const char *sql_create = "CREATE TABLE IF NOT EXISTS flcn_hashes (flcn_hashes_id INTEGER PRIMARY KEY, f_name TEXT UNIQUE, f_hash TEXT UNIQUE)";
+	const char *sql_create = "CREATE TABLE IF NOT EXISTS flcn_hashes (f_name TEXT PRIMARY KEY, f_hash TEXT NOT NULL)";
 	const char *sql_insert = "REPLACE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)";
 
 

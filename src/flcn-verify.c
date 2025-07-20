@@ -56,7 +56,7 @@ int flcn_verify(const char *f_name)
 
 		if(strcmp(cmp.f_name, f_name) == 0)
 		{
-			printf("File Name: CHECK\n");
+			printf("File Name: \033[32mOK!\033[0m\n");
 			fflush(stdout);
 			f_name_flag = true;
 		}
@@ -64,14 +64,18 @@ int flcn_verify(const char *f_name)
 	
 		if(strcmp(cmp.hash, flcn_save->f_hash) == 0)
 		{
-			printf("File Hash: CHECK\n");
+			printf("File Hash: \033[32mOK!\033[0m\n");
 			fflush(stdout);
 			f_hash_flag = true;
 		}
 
-	//adicionar algo mais robusto aqui, me parece muito simplista	
 		free(cmp.f_name);
 		free(cmp.hash);
+	}
+
+	if(f_name_flag == true && f_hash_flag == false)
+	{
+		printf("\033[31mFailed\033[0m: A file whith this name was found in database, but the hash does not match, the file may be different or corrupted\n");
 	}
 
 	if(sql_prep != SQLITE_DONE)
