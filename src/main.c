@@ -48,10 +48,15 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: md5 option require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 				
 				char *md5_print = flcn_md5_hash(argv[2]);
+				if(md5_print == NULL)
+				{
+					printf("The file don't exist or can't be opened\n");
+					return -1;
+				}
 				printf("\033[32mDONE!\033[0m\n");
 				printf("MD5: %s\n", md5_print);	
 				break;
@@ -63,12 +68,19 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha256 option require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 			
 				char *sha256_print = flcn_256_hash(argv[2]);
-				printf("\033[32mDONE!\033[0m\n");
+
+				if(sha256_print == NULL)
+				{
+					printf("The file don't exist or can't be opened\n");
+					return -1;
+				}
+
 				printf("SHA256: %s\n", sha256_print);
+				printf("\033[32mDONE!\033[0m\n");
 				break;
 
 
@@ -79,10 +91,17 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha384 option require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 
 				char *sha384_print = flcn_384_hash(argv[2]);
+
+				if(sha256_print == NULL)
+				{
+					printf("The file don't exist or can't be opened\n");
+					return -1;
+				}
+
 				printf("\033[32mDONE!\033[0m\n");
 				printf("SHA384: %s\n", sha384_print);
 				break;
@@ -95,9 +114,16 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: sha512 option require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 				char *sha512_print = flcn_512_hash(argv[2]);
+
+				if(sha256_print == NULL)
+				{
+					printf("The file don't exist or can't be opened\n");
+					return -1;
+				}
+
 				printf("\033[32mDONE!\033[0m\n");
 				printf("SHA512: %s\n", sha512_print);
 				break;
@@ -110,7 +136,7 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: the 'save' function require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 				
 				int save_func_status = save_in_db(argv[2]);
@@ -119,7 +145,7 @@ int main(int argc, char *argv[])
 					perror("Error in 'save' function. The File Name and File Hash are not saved in Data Base");
 					break;
 				}
-				printf("\033[32mOK\033[0m\n");
+				printf("\033[32mDONE\033[0m\n");
 
 				break;
 
@@ -130,14 +156,16 @@ int main(int argc, char *argv[])
 				if(optarg[0] == '-')
 				{
 					fprintf(stderr, "Error: the 'verify' function require a file as argument, but got '%s' as argument instead\n", optarg);
-						exit(EXIT_FAILURE);
+						return -1;
 				}
+
+//				if(argv[2])
 				
 				int verify_func_status = flcn_verify(argv[2]);
 				if(verify_func_status != 0)
 				{
 					printf("Error while verifying hashes. The file hash mismatch the original file\n");
-						exit(EXIT_FAILURE);
+						return -1;
 				}
 				printf("\033[32mOK\033[0m\n");
 

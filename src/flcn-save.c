@@ -9,8 +9,8 @@ int save_in_db(char *f_name)
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 
-	const char *sql_create = "CREATE TABLE IF NOT EXISTS flcn_hashes (flcn_hashes_id INTEGER PRIMARY KEY, f_name TEXT, f_hash TEXT UNIQUE)";
-	const char *sql_insert = "INSERT OR IGNORE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)";
+	const char *sql_create = "CREATE TABLE IF NOT EXISTS flcn_hashes (flcn_hashes_id INTEGER PRIMARY KEY, f_name TEXT UNIQUE, f_hash TEXT UNIQUE)";
+	const char *sql_insert = "REPLACE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)";
 
 
 	int sql_op = sqlite3_open_v2(flcn_save_init->full_db_path, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
@@ -47,7 +47,7 @@ int save_in_db(char *f_name)
 				if(dir->d_type == DT_REG)
 				{
 					flcn_save->f_all_name = dir->d_name;
-					flcn_save->f_hash = flcn_384_hash(flcn_save->f_all_name);
+					flcn_save->f_hash = flcn_256_hash(flcn_save->f_all_name);
 
 					int sql_save_all_prepare = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, NULL);
 					if(sql_save_all_prepare != SQLITE_OK)
@@ -87,7 +87,7 @@ int save_in_db(char *f_name)
 		goto end_func;
 	}
 
-	flcn_save->f_hash = flcn_384_hash(f_name);
+	flcn_save->f_hash = flcn_256_hash(f_name);
 
 	int sql_save_prepare = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, NULL);
 	if(sql_save_prepare != SQLITE_OK)

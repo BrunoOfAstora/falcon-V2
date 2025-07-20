@@ -74,11 +74,10 @@ char *flcn_md5_hash( const char *usr_in )
 	flcn_init->hex_hash_result[i * 2] = '\0';
 			
 	ret_val = flcn_init->hex_hash_result;
+
 	return ret_val;
 
 end_func:
-	if(md5_ctx)
-		EVP_MD_CTX_free(md5_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);
@@ -171,9 +170,7 @@ char *flcn_256_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(s256_ctx)
-		EVP_MD_CTX_free(s256_ctx);
-
+	
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);
 
@@ -266,8 +263,6 @@ char *flcn_384_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(s384_ctx)
-		EVP_MD_CTX_free(s384_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);
@@ -360,8 +355,6 @@ char *flcn_512_hash( const char *usr_in )
 	return ret_val;
 
 end_func:
-	if(s512_ctx)
-		EVP_MD_CTX_free(s512_ctx);
 
 	if(flcn_init->file_usr_stream)
 		fclose(flcn_init->file_usr_stream);

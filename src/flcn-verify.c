@@ -10,8 +10,13 @@ typedef struct Compare_att
 
 int flcn_verify(const char *f_name)
 {
+	if(f_name == NULL)
+	{
+		fprintf(stderr,"Error while opening file\n");
+		return 1;
+	}
 
-	flcn_save *flcn_save = malloc(sizeof *flcn_save);
+	flcn_save *flcn_save = malloc(sizeof *flcn_save);	
 
 	bool f_name_flag = false;
 	bool f_hash_flag = false;
@@ -35,14 +40,19 @@ int flcn_verify(const char *f_name)
 		return 1;
 	}
 	
-	flcn_save->f_hash = flcn_384_hash(f_name);	
+	flcn_save->f_hash = flcn_256_hash(f_name);	
+	if(flcn_save->f_hash == NULL)
+	{
+		free(flcn_save);//Verificar por que do segfault
+		printf("Error opening file to calculate Hash\n");
+		return 1;
+	}
 
 	while((sql_prep = sqlite3_step(stmt)) == SQLITE_ROW)
 	{
 		cmp_info cmp;
 		cmp.f_name = strdup((const char *)sqlite3_column_text(stmt, 0));
 		cmp.hash   = strdup((const char *)sqlite3_column_text(stmt, 1));
-
 
 		if(strcmp(cmp.f_name, f_name) == 0)
 		{
@@ -58,11 +68,12 @@ int flcn_verify(const char *f_name)
 			fflush(stdout);
 			f_hash_flag = true;
 		}
+
 	//adicionar algo mais robusto aqui, me parece muito simplista	
 		free(cmp.f_name);
 		free(cmp.hash);
 	}
-	
+
 	if(sql_prep != SQLITE_DONE)
 	{
 		fprintf(stderr, "SQLite step err: %s", sqlite3_errmsg(db));
