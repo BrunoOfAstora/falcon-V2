@@ -75,7 +75,12 @@ int flcn_verify(const char *f_name)
 
 	if(f_name_flag == true && f_hash_flag == false)
 	{
-		printf("\033[31mFailed\033[0m: A file whith this name was found in database, but the hash does not match, the file may be different or corrupted\n");
+		printf("\033[31mFailed\033[0m: A file with this name was found in database, but the hash does not match, the file may be different or corrupted\n");
+	}
+
+	if(f_name_flag == false && f_hash_flag == true)
+	{
+		printf("\033[33mNotice\033[0m: This file was found in database but with a different name\n");
 	}
 
 	if(sql_prep != SQLITE_DONE)

@@ -6,6 +6,7 @@
 #define _GNU_SOURCE
 
 #include <getopt.h>
+#include "uthash.h"
 #include <limits.h>
 #include <unistd.h>
 #include <sqlite3.h>
@@ -110,6 +111,12 @@ int save_in_db(char *f_name);
 
 int flcn_verify(const char *f_name);
 
+
+//		*******************
+//		*remove duplicates*
+//		*******************
+
+int rmdup();
 
 
 

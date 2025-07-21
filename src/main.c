@@ -25,11 +25,12 @@ int main(int argc, char *argv[])
 			{"sha512", 	required_argument,	0, '5'},
 			{"save",    required_argument, 	0, 's'},
 			{"verify", 	required_argument,  0, 'v'},
+			{"rmdup", 	no_argument,  		0, 'r'},
 			{"help", 	no_argument,		0, 'h'},				
 			{0, 		0, 					0,  0 },
 		};
 
-		opt = getopt_long(argc, argv, "m:2:3:5:s:v:h", long_options, &opt_index);
+		opt = getopt_long(argc, argv, "m:2:3:5:s:v:rh", long_options, &opt_index);
 		if(opt == -1)
 				break;
 
@@ -178,6 +179,22 @@ int main(int argc, char *argv[])
 				}
 
 				break;
+
+
+			case 'r':
+				printf("Removing duplicates...\n");
+				fflush(stdout);
+					
+				int rm_dup = rmdup();
+				if(rm_dup != 0)
+				{
+					perror("Error while removing duplicates\n");
+					break;
+				}
+				printf("\033[32mDONE\033[0m\n");
+
+				break;
+
 
 			case 'h':
 				printf("Help:\n	Options =>\n");
