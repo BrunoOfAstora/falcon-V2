@@ -23,8 +23,8 @@ Após compilar o Falcon, você poderá executar os seguintes comandos diretament
 | `falcon --sha256 <arquivo>`        | Calcula o hash **SHA-256**                      |
 | `falcon --sha384 <arquivo>`        | Calcula o hash **SHA-384**                       |    
 | `falcon --sha512 <arquivo>`        | Calcula o hash **SHA-512**                       |
-| `falcon --rmdup(breve)`                   | Remove arquivos duplicados no diretório atual   |
-| `falcon --verify(breve)`                  | Verifica integridade com base nos hashes salvos (Parcial) |
+| `falcon --rmdup`                   | Remove arquivos duplicados no diretório atual   |
+| `falcon --verify <arquivo>`                  | Verifica integridade com base nos hashes salvos (Parcial) |
 | `falcon --help` ou `falcon -h`   | Exibe o menu de ajuda                           |
 
 # Como Funciona ?:
@@ -32,7 +32,7 @@ Após compilar o Falcon, você poderá executar os seguintes comandos diretament
 ## flcn save < arquivo >: 
 Ao ser chamado, recebe um argumento, calcula o hash SHA384 do arquivo e salva na pasta "flcn-hash" junto ao nome original do arquivo dentro do diretório home, assim sempre que for verificado com a função "verify" ou com alguma outra função, o programa busca sempre pelo mesmo diretório, o que torna essa busca mais organizada.
 
-## flcn md5, sha256, sha384 < aquivo >:
+## flcn md5, sha256, sha384 < arquivo >:
 Ao ser chamado, calcula o HASH do arquivo especificado pelo usuário e printa na tela.
 
 ## flcn rmdup:
@@ -63,17 +63,17 @@ O binário `falcon` será gerado na pasta raiz do projeto.
 - ✅ Cálculo de hash **SHA-384**
 - ✅ Cálculo de hash **SHA-512**
 - ✅ Salvamento de hashes e nomes de arquivos em um Banco de Dados para posterior verificação
-- ✅ Remoção de duplicatas no diretório atual(Disponível em breve)
-- ✅ Verificação parcial de integridade (compare hashes salvos)(Disponível em breve)
+- ✅ Remoção de duplicatas no diretório atual
+- ✅ Verificação de integridade (comparação de hashes salvos)
 - ✅ Interface de ajuda via `--help` e `-h`
 
 ##  Funcionalidades Planejadas (To-Do)
 
-- [ ] Finalizar a verificação completa de integridade
+- [X] Finalizar a verificação completa de integridade
 - [ ] Opção de **shred**
-- [ ] Exportar hashes de diretórios inteiros em formato padrão
-- [ ] Suporte a outros algoritmos de hash (ex: SHA-512)
-- [ ] Melhorias no parser de argumentos CLI
+- [X] Exportar hashes de diretórios inteiros em formato padrão
+- [X] Suporte a outros algoritmos de hash (ex: SHA-512)
+- [X] Melhorias no parser de argumentos CLI
 - [ ] Outros...
       
       
