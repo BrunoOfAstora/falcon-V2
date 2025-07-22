@@ -12,6 +12,36 @@ O principal objetivo é fornecer um conjunto de utilitários para :
 
 >**Aviso:** Este projeto está em fase inicial de desenvolvimento. Algumas funcionalidades ainda estão incompletas ou instáveis.
 
+## Instalação:
+Você pode Instalar o Falcon facilmente com os seguintes comandos no terminal:
+
+```bash
+    git clone https://github.com/BrunoOfAstora/falcon-V2.git
+
+    cd falcon-V2
+
+    ./installer.sh
+```
+
+Você pode desinstalar o falcon completamente usando:
+
+```bash
+    ./installer un
+```
+
+Caso queira fazerr alterações e compilar por conta prórpia:
+
+### Requisitos: **Linux** + **GCC**
+
+```bash
+git clone https://github.com/BrunoOfAstora/falcon-V2.git
+cd falcon
+make
+```
+
+O binário `falcon` será gerado na pasta raiz do projeto.
+
+
 ##  Como Usar
 
 Após compilar o Falcon, você poderá executar os seguintes comandos diretamente no terminal:
@@ -44,18 +74,6 @@ Essa função verifica a base de dados criada pela função "save" verificando s
 ## flcn --help:
 Printa o menu de ajuda na tela.
 
-## Compilação
-
-Requisitos: **Linux** + **GCC**
-
-```bash
-git clone https://github.com/BrunoOfAstora/falcon.git
-cd falcon
-make
-```
-
-O binário `falcon` será gerado na pasta raiz do projeto.
-
 ## ✅ Funcionalidades Concluídas
 
 - ✅ Cálculo de hash **MD5**
@@ -63,9 +81,10 @@ O binário `falcon` será gerado na pasta raiz do projeto.
 - ✅ Cálculo de hash **SHA-384**
 - ✅ Cálculo de hash **SHA-512**
 - ✅ Salvamento de hashes e nomes de arquivos em um Banco de Dados para posterior verificação
-- ✅ Remoção de duplicatas no diretório atual
+- ✅ Remoção de duplicatas em qualquer diretório
 - ✅ Verificação de integridade (comparação de hashes salvos)
 - ✅ Interface de ajuda via `--help` e `-h`
+- ✅ Verificação de integridade de arquivos
 
 ##  Funcionalidades Planejadas (To-Do)
 
