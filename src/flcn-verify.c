@@ -10,6 +10,8 @@ typedef struct Compare_att
 
 int flcn_verify(const char *f_name)
 {
+	struct dirent *dir;
+
 	if(f_name == NULL)
 	{
 		fprintf(stderr,"Error while opening file\n");
@@ -43,7 +45,7 @@ int flcn_verify(const char *f_name)
 	flcn_save->f_hash = flcn_256_hash(f_name);	
 	if(flcn_save->f_hash == NULL)
 	{
-		free(flcn_save);//Verificar por que do segfault
+		free(flcn_save);
 		printf("Error opening file to calculate Hash\n");
 		return 1;
 	}

@@ -10,11 +10,10 @@ typedef struct temp
 
 temp_t *hm = NULL;
 
-
-
 int rmdup()
 {
 	int ret_code = 1;
+	unsigned int f_deleted_count = 0;
 
 	DIR *dirstr; //dir stream
 	struct dirent *dir;
@@ -56,6 +55,7 @@ int rmdup()
 			else
 			{
 				remove(curr_fname);
+				f_deleted_count++;
 				printf("\n\x1b[31m->Removed:\x1b[0m %s (same: %s)\n", curr_fname, temp->fname);	
 			}
 			printf("Checking %s...\n", dir->d_name);
@@ -72,8 +72,8 @@ int rmdup()
 	ret_code = 0;
 	
 ret: 	
-	
-	
+	printf("%d duplicated files deleted.\n", f_deleted_count);		
+
 	if(dirstr)
 		closedir(dirstr);
 

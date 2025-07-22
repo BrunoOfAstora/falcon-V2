@@ -203,6 +203,7 @@ int main(int argc, char *argv[])
 				printf("-3 or --sha384			Return hash SHA384 of file\n");
 				printf("-5 or --sha512			Return hash SHA512 of file\n");	
 				printf("-s or --save			Save the file name and file hash in the data base\n");
+				printf("-r or --rmdupt			Iterates over current directory and remove duplicated files");
 							
 				break;
 
