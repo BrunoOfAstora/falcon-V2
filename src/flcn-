@@ -4,7 +4,6 @@ int save_in_db(char *f_name)
 {
 	int return_code = 1;
 
-	struct stat st;
 	struct dirent *dir;
 	flcn_save *flcn_save = malloc( sizeof *flcn_save );
 	sqlite3 *db;
@@ -37,55 +36,50 @@ int save_in_db(char *f_name)
 
 	sqlite3_finalize(stmt);
 	
-	stat(f_name, &st);
-	if(S_ISDIR(st.st_mode))
+
+	if(strcmp(f_name, ".") == 0)
 	{
-		flcn_save->curr_dir = opendir(f_name);
-		if(!flcn_save->curr_dir)
-		goto end_func;
-		
-		while((dir = readdir(flcn_save->curr_dir)) != NULL)
+		flcn_save->curr_dir = opendir(".");
+		if(flcn_save->curr_dir)
 		{
-			if(dir->d_type == DT_REG)
+			while((dir = readdir(flcn_save->curr_dir)) != NULL)
 			{
-				flcn_save->f_all_name = malloc(PATH_MAX);
-				snprintf(flcn_save->f_all_name, PATH_MAX, "%s/%s", f_name, dir->d_name);
+				if(dir->d_type == DT_REG)
+				{
+					flcn_save->f_all_name = dir->d_name;
+					flcn_save->f_hash = flcn_256_hash(flcn_save->f_all_name);
+
+					int sql_save_all_prepare = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, NULL);
+					if(sql_save_all_prepare != SQLITE_OK)
+					{
+						fprintf(stderr, "SQLite Error, (save all BIND TEXT 1): %s\n", sqlite3_errmsg(db));
+						continue;
+					} 
+
+					int sql_save_all_fname = sqlite3_bind_text(stmt, 1, flcn_save->f_all_name, -1, SQLITE_STATIC);
+					if(sql_save_all_fname != SQLITE_OK)
+					{
+						fprintf(stderr, "SQLite Error, (save all BIND TEXT 1): %s\n", sqlite3_errmsg(db));
+						continue;
+					}
+
+					int sql_save_all_fhash = sqlite3_bind_text(stmt, 2, flcn_save->f_hash, -1, SQLITE_STATIC);
+					if(sql_save_all_fhash != SQLITE_OK)
+					{
+						fprintf(stderr, "SQLite Error, (save all BIND TEXT 2): %s\n", sqlite3_errmsg(db));
+						continue;
+					}
+
+					int sql_save_all_step = sqlite3_step(stmt);
+					if(sql_save_all_step != SQLITE_OK)	
+						continue;
 					
-				flcn_save->f_hash = flcn_256_hash(flcn_save->f_all_name);
-
-				int sql_save_all_prepare = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, NULL);
-				if(sql_save_all_prepare != SQLITE_OK)
-				{
-					fprintf(stderr, "SQLite Error, (save all BIND TEXT 1): %s\n", sqlite3_errmsg(db));
-					free(flcn_save->f_all_name);
-					continue;
-				} 
-
-				int sql_save_all_fname = sqlite3_bind_text(stmt, 1, dir->d_name, -1, SQLITE_STATIC);
-				if(sql_save_all_fname != SQLITE_OK)
-				{
-					fprintf(stderr, "SQLite Error, (save all BIND TEXT 1): %s\n", sqlite3_errmsg(db));
-					free(flcn_save->f_all_name);
-					continue;
-				}
-
-				int sql_save_all_fhash = sqlite3_bind_text(stmt, 2, flcn_save->f_hash, -1, SQLITE_STATIC);
-				if(sql_save_all_fhash != SQLITE_OK)
-				{
-					fprintf(stderr, "SQLite Error, (save all BIND TEXT 2): %s\n", sqlite3_errmsg(db));
-					free(flcn_save->f_all_name);
-					continue;
-				}
-
-				int sql_save_all_step = sqlite3_step(stmt);
-				if(sql_save_all_step != SQLITE_OK)	
-					continue;
-					
-				int sql_save_all_finalize = sqlite3_finalize(stmt);
-				if(sql_save_all_finalize != SQLITE_OK)
-				{
-					fprintf(stderr, "SQLite Error, (save all FINALIZE): %s\n", sqlite3_errmsg(db));
-					continue;
+					int sql_save_all_finalize = sqlite3_finalize(stmt);
+					if(sql_save_all_finalize != SQLITE_OK)
+					{
+						fprintf(stderr, "SQLite Error, (save all FINALIZE): %s\n", sqlite3_errmsg(db));
+						continue;
+					}
 				}
 			}
 		}

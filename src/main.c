@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
 					return -1;
 				}
 
-				printf("SHA256: %s\n", sha256_print);
 				printf("\033[32mDONE!\033[0m\n");
+				printf("SHA256: %s\n", sha256_print);
 				break;
 
 

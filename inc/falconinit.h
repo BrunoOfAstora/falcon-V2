@@ -19,6 +19,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <libgen.h>
 #include <openssl/evp.h>
 
 #define FILE_HASH_BUF_SIZE 4096
@@ -109,7 +110,7 @@ char *flcn_512_hash(const char *usr_in);
 //Saves the file name and fiel hash in a DB (SQLite3)
 int save_in_db(char *f_name);
 
-int flcn_verify(const char *f_name);
+int flcn_verify(char *f_name);
 
 
 //		*******************

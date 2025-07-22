@@ -8,7 +8,7 @@ typedef struct Compare_att
 
 }cmp_info;
 
-int flcn_verify(const char *f_name)
+int flcn_verify(char *f_name)
 {
 	struct dirent *dir;
 
@@ -41,7 +41,12 @@ int flcn_verify(const char *f_name)
 		fprintf(stderr, "SQLite error: Error while preparing SQL statement: %s\n", sqlite3_errmsg(db));
 		return 1;
 	}
-	
+
+
+
+
+
+/////////////////////////////////////	
 	flcn_save->f_hash = flcn_256_hash(f_name);	
 	if(flcn_save->f_hash == NULL)
 	{
@@ -56,7 +61,7 @@ int flcn_verify(const char *f_name)
 		cmp.f_name = strdup((const char *)sqlite3_column_text(stmt, 0));
 		cmp.hash   = strdup((const char *)sqlite3_column_text(stmt, 1));
 
-		if(strcmp(cmp.f_name, f_name) == 0)
+		if(strcmp(cmp.f_name, basename(f_name)) == 0)
 		{
 			printf("File Name: \033[32mOK!\033[0m\n");
 			fflush(stdout);
@@ -91,6 +96,12 @@ int flcn_verify(const char *f_name)
 	}
 
 	sqlite3_finalize(stmt);
+//////////////////////
+
+
+
+
+
 
 	return SQLITE_OK;
 }
