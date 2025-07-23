@@ -1,4 +1,5 @@
 #include "falconinit.h"
+#include <sqlite3.h>
 
 int save_in_db(char *f_name)
 {
@@ -42,7 +43,7 @@ int save_in_db(char *f_name)
 	{
 		flcn_save->curr_dir = opendir(f_name);
 		if(!flcn_save->curr_dir)
-		goto end_func;
+			goto end_func;
 		
 		while((dir = readdir(flcn_save->curr_dir)) != NULL)
 		{

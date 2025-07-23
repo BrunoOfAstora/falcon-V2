@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 
 //				if(argv[2])
 				
-				int verify_func_status = flcn_verify(argv[2]);
+				int verify_func_status = flcn_verify_all(argv[2]);
 				if(verify_func_status != 0)
 				{
 					printf("Error while verifying hashes. The file hash mismatch the original file\n");

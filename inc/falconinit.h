@@ -3,14 +3,14 @@
 #ifndef FALCONINIT_H
 #define FALCONINIT_H
 
+#define _XOPEN_SOURCE 500
 #define _GNU_SOURCE
 
+#include <ftw.h>
 #include <getopt.h>
 #include "uthash.h"
 #include <limits.h>
 #include <unistd.h>
-#include <sqlite3.h>
-#include <sqlite3.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -20,7 +20,6 @@
 #include <dirent.h>
 #include <errno.h>
 #include <libgen.h>
-#include <openssl/evp.h>
 
 #define FILE_HASH_BUF_SIZE 4096
 #define FILE_NAME_BUFFER_SIZE_ 128
@@ -49,7 +48,7 @@ typedef struct FalconHashInit
 
 	uint8_t file_hash_buf_s[FILE_HASH_BUF_SIZE];//------->Size of buffer to store the hash (64) -> *Openssl Documentation
 	
-	unsigned char md_hash_buf[EVP_MAX_MD_SIZE];//-------->Actual buffer that contains chuncks of hash
+	unsigned char md_hash_buf[(16 + 20)];//-------->Actual buffer that contains chuncks of hash
 	
 	unsigned int hash_md_leng;//------------------------->Defines the lenght of hash to write on	
 
@@ -111,6 +110,10 @@ char *flcn_512_hash(const char *usr_in);
 int save_in_db(char *f_name);
 
 int flcn_verify(char *f_name);
+
+int flcn_verify_all(const char *start_path);
+
+int verify_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf);
 
 
 //		*******************

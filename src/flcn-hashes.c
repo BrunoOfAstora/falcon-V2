@@ -1,4 +1,6 @@
 #include "falconinit.h"
+#include <openssl/evp.h>
+
 
 //			*********
 //			***MD5***
