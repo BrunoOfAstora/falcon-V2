@@ -26,7 +26,7 @@ int save_in_db_all(const char *start_path)
 	}
 
 	if(S_ISDIR(st.st_mode))
-		return nftw(start_path, save_in_db_callback, 12, FTW_PHYS);
+		return nftw(start_path, save_in_db_callback, 1, FTW_PHYS);
 
 	if(S_ISREG(st.st_mode))
 		return save_in_db((char *)start_path);
@@ -79,7 +79,7 @@ int save_in_db(char *f_name)
 		goto end_func;
 	}
 
-	if((sqlite3_bind_text(stmt, 1, f_name, -1, SQLITE_STATIC)) != SQLITE_OK)
+	if((sqlite3_bind_text(stmt, 1, basename(f_name), -1, SQLITE_STATIC)) != SQLITE_OK)
 	{
 		fprintf(stderr, "SQLite Error, (bind text 1 error): %s\n", sqlite3_errmsg(db));
 		goto end_func;

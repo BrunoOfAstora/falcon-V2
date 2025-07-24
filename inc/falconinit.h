@@ -72,14 +72,10 @@ typedef struct FalconSaveInit
 
 }flcn_save;
 
-
-
 extern flcn_save *flcn_save_init;
 
 void _save_init();
 void _save_deinit(void);
-
-
 
 //		******************
 //		**HASH Functions**
@@ -130,8 +126,5 @@ int verify_callback(const char *f_path, const struct stat *st, int flag, struct 
 //		*******************
 
 int rmdup();
-
-
-
 
 #endif

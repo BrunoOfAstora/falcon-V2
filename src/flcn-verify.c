@@ -33,7 +33,7 @@ int flcn_verify_all(const char *start_path)
 	}
 
 	if(S_ISDIR(st.st_mode))
-		return nftw(start_path, verify_callback, 12, FTW_PHYS);
+		return nftw(start_path, verify_callback, 1, FTW_PHYS);
 
 	else if (S_ISREG(st.st_mode))
 		return flcn_verify((char *)start_path);
@@ -48,8 +48,6 @@ int flcn_verify_all(const char *start_path)
 
 int flcn_verify(char *f_name)
 {
-
-	flcn_save *flcn_save = malloc(sizeof *flcn_save);	
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
 	cmp_info cmp;
@@ -81,7 +79,6 @@ int flcn_verify(char *f_name)
 	const char *f_hash = flcn_256_hash(f_name);	
 	if(f_hash == NULL)
 	{
-		free(flcn_save);
 		printf("Error opening file to calculate Hash\n");
 		return 1;
 	}
@@ -131,9 +128,6 @@ int flcn_verify(char *f_name)
 
 	if(db)
 		sqlite3_close(db);
-
-	if(flcn_save)
-		free(flcn_save);
 
 	return 0;
 }
