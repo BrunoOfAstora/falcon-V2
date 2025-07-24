@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 						return -1;
 				}
 				
-				int save_func_status = save_in_db(argv[2]);
+				int save_func_status = save_in_db_all(argv[2]);
 				if(save_func_status != 0)
 				{
 					perror("Error in 'save' function. The File Name and File Hash are not saved in Data Base");

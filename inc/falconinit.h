@@ -109,6 +109,15 @@ char *flcn_512_hash(const char *usr_in);
 //Saves the file name and fiel hash in a DB (SQLite3)
 int save_in_db(char *f_name);
 
+int save_in_db_all(const char *start_path);
+
+int save_in_db_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf);
+
+
+//		********************
+//		**Verify Functions**
+//		********************
+
 int flcn_verify(char *f_name);
 
 int flcn_verify_all(const char *start_path);

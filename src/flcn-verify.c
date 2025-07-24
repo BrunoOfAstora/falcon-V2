@@ -1,6 +1,5 @@
 #include "falconinit.h"
 #include <sqlite3.h>
-#include <ftw.h>
 
 typedef struct Compare_att
 {
@@ -9,20 +8,18 @@ typedef struct Compare_att
 
 }cmp_info;
 
+
+
 int verify_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf)
 {
 	(void)st;    
     (void)ftwbuf; 	
 
 	if(flag == FTW_F)
-	{
 		flcn_verify((char *)f_path);
-	}
-
+	
 	return 0;
 }
-
-
 
 
 int flcn_verify_all(const char *start_path)
@@ -49,14 +46,13 @@ int flcn_verify_all(const char *start_path)
 }
 
 
-
-
 int flcn_verify(char *f_name)
 {
 
 	flcn_save *flcn_save = malloc(sizeof *flcn_save);	
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
+	cmp_info cmp;
 
 	bool f_name_flag = false;
 	bool f_hash_flag = false;
@@ -92,39 +88,44 @@ int flcn_verify(char *f_name)
 
 	while((sqlite3_step(stmt)) == SQLITE_ROW)
 	{
-		cmp_info cmp;
 		cmp.f_name = strdup((const char *)sqlite3_column_text(stmt, 0));
 		cmp.hash   = strdup((const char *)sqlite3_column_text(stmt, 1));
 
 		if(strcmp(cmp.f_name, basename(f_name)) == 0)
-		{
-			printf("File Name: \033[32mOK!\033[0m\n");
-			fflush(stdout);
 			f_name_flag = true;
-		}
-
 	
 		if(strcmp(cmp.hash, f_hash) == 0)
-		{
-			printf("File Hash: \033[32mOK!\033[0m\n");
-			fflush(stdout);
 			f_hash_flag = true;
-		}
-
+		
 		free(cmp.f_name);
 		free(cmp.hash);
+	
+		if(f_name_flag == true && f_hash_flag == true)
+			break;
 	}
+
+	printf("\n");
+	printf("Checking %s...", basename(f_name));
+	if(f_name_flag == true)
+		printf("\033[32mOK!\033[0m\n");
+	else
+		printf("\033[31mFailed\033[0m\n");
+
+
+	printf("Checking %s hash...", basename(f_name));
+	if(f_hash_flag == true)
+		printf("File Hash: \033[32mOK!\033[0m\n");
+	else
+		printf("\033[31mFailed\033[0m\n");
+
+	if(f_name_flag == false && f_hash_flag == false)
+		printf("File not found in DB\n");
 
 	if(f_name_flag == true && f_hash_flag == false)
-	{
-		printf("\033[31mFailed\033[0m: A file with this name was found in database, but the hash does not match, the file may be different or corrupted\n");
-	}
-
+		printf("\033[31mFailed\033[0m: A file with name %s was found in database, but the hash does not match, the file may be different or corrupted\n", basename(f_name));
 
 	if(f_name_flag == false && f_hash_flag == true)
-	{ 
 		printf("\033[33mNotice\033[0m: This file was found in database but with a different name\n"); 
-	}
 
 	sqlite3_finalize(stmt);
 
