@@ -39,6 +39,8 @@ size_t flcn_CreateDbFile(char *out_path, size_t size);
 
 bool sec_strcmp(const char *str1, const char *str2, size_t size);
 
+bool sec_memcmp(const void *blk1, const void *blk2, const size_t size);
+
 typedef struct FalconHashInit
 {
 

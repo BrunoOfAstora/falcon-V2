@@ -8,7 +8,7 @@ typedef struct Compare_att
 
 }cmp_info;
 
-
+unsigned int f_err = 0;
 
 int verify_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf)
 {
@@ -39,7 +39,15 @@ int flcn_verify_all(const char *start_path)
 	}
 
 	if(S_ISDIR(st.st_mode))
-		return nftw(start_path, verify_callback, 1, FTW_PHYS);
+	{
+		nftw(start_path, verify_callback, 1, FTW_PHYS);
+		printf("\n_______________________________\n");
+		fflush(stdout);
+		printf("Divergences found: %d", f_err);
+		printf("\n_______________________________\n");
+		fflush(stdout);
+		return 0;
+	}
 
 	else if (S_ISREG(st.st_mode))
 		return flcn_verify((char *)start_path);
@@ -105,10 +113,10 @@ int flcn_verify(char *f_name)
 		size_t leng1 = strlen(cmp.f_name);
 		size_t leng2 = strlen(abs_f_name);
 
-		if(sec_strcmp(cmp.f_name, abs_f_name, leng1) == true && leng1 == leng2) 
+		if(sec_memcmp(cmp.f_name, abs_f_name, leng1) == true && leng1 == leng2) 
 			f_name_flag = true;
 	
-		if(sec_strcmp(cmp.hash, f_hash, 32) == true)
+		if(sec_memcmp(cmp.hash, f_hash, 32) == true)
 			f_hash_flag = true;
 		
 		free(cmp.f_name);
@@ -129,8 +137,10 @@ int flcn_verify(char *f_name)
 	else if(!f_name_flag && f_hash_flag)
 		printf("\033[32mOK\033[0m\n\033[33mNotice\033[0m: This file was found in database but with a different name\n");
 	else
+	{
+		f_err++;
 		printf("\033[31mFailed\033[0m\n");
-
+	}
 
 	if(!f_name_flag && !f_hash_flag)
 		printf("File not found in DB\n");
