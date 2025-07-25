@@ -43,6 +43,18 @@ int save_in_db(char *f_name)
 {
 	int return_code = 1;
 
+	if(f_name == NULL)
+	{
+		fprintf(stderr,"Error while opening file\n");
+		return 1;
+	}
+
+	char *abs_f_name = realpath(f_name, NULL);
+    if (abs_f_name == NULL) {
+        perror("Error getting realpath");
+        return 1;
+    }
+
 	flcn_save *flcn_save = malloc( sizeof *flcn_save );
 	sqlite3 *db;
 	sqlite3_stmt *stmt;
@@ -79,7 +91,7 @@ int save_in_db(char *f_name)
 		goto end_func;
 	}
 
-	if((sqlite3_bind_text(stmt, 1, basename(f_name), -1, SQLITE_STATIC)) != SQLITE_OK)
+	if((sqlite3_bind_text(stmt, 1, abs_f_name, -1, SQLITE_STATIC)) != SQLITE_OK)
 	{
 		fprintf(stderr, "SQLite Error, (bind text 1 error): %s\n", sqlite3_errmsg(db));
 		goto end_func;

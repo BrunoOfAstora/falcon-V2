@@ -17,6 +17,12 @@ int verify_callback(const char *f_path, const struct stat *st, int flag, struct 
 
 	if(flag == FTW_F)
 		flcn_verify((char *)f_path);
+
+	/*else if (flag == FTW_D || flag == FTW_DP)
+	{
+	//	if(ftwbuf->level > 1)
+			return FTW_SKIP_SUBTREE;
+	}*/
 	
 	return 0;
 }
@@ -62,7 +68,13 @@ int flcn_verify(char *f_name)
 		return 1;
 	}
 
-	const char *sql_request = "SELECT f_name, f_hash FROM flcn_hashes";
+	char *abs_f_name = realpath(f_name, NULL);
+    if (abs_f_name == NULL) {
+        perror("Error getting realpath");
+        return 1;
+    }
+
+	const char *sql_request = "SELECT f_name, f_hash FROM flcn_hashes WHERE f_name = ?";
 	
 	if((sqlite3_open_v2(flcn_save_init->full_db_path, &db, SQLITE_OPEN_READWRITE, NULL)) != SQLITE_OK)
 	{
@@ -83,22 +95,24 @@ int flcn_verify(char *f_name)
 		return 1;
 	}
 
-	while((sqlite3_step(stmt)) == SQLITE_ROW)
+	sqlite3_bind_text(stmt, 1, abs_f_name, -1, SQLITE_STATIC);
+
+	if (sqlite3_step(stmt) == SQLITE_ROW)
 	{
 		cmp.f_name = strdup((const char *)sqlite3_column_text(stmt, 0));
 		cmp.hash   = strdup((const char *)sqlite3_column_text(stmt, 1));
 
-		if(strcmp(cmp.f_name, basename(f_name)) == 0)
+		size_t leng1 = strlen(cmp.f_name);
+		size_t leng2 = strlen(abs_f_name);
+
+		if(sec_strcmp(cmp.f_name, abs_f_name, leng1) == true && leng1 == leng2) 
 			f_name_flag = true;
 	
-		if(strcmp(cmp.hash, f_hash) == 0)
+		if(sec_strcmp(cmp.hash, f_hash, 32) == true)
 			f_hash_flag = true;
 		
 		free(cmp.f_name);
 		free(cmp.hash);
-	
-		if(f_name_flag == true && f_hash_flag == true)
-			break;
 	}
 
 	printf("\n");
@@ -110,19 +124,19 @@ int flcn_verify(char *f_name)
 
 
 	printf("Checking %s hash...", basename(f_name));
-	if(f_hash_flag == true)
+	if(f_hash_flag)
 		printf("File Hash: \033[32mOK!\033[0m\n");
+	else if(!f_name_flag && f_hash_flag)
+		printf("\033[32mOK\033[0m\n\033[33mNotice\033[0m: This file was found in database but with a different name\n");
 	else
 		printf("\033[31mFailed\033[0m\n");
 
-	if(f_name_flag == false && f_hash_flag == false)
+
+	if(!f_name_flag && !f_hash_flag)
 		printf("File not found in DB\n");
 
-	if(f_name_flag == true && f_hash_flag == false)
+	if(f_name_flag && !f_hash_flag)
 		printf("\033[31mFailed\033[0m: A file with name %s was found in database, but the hash does not match, the file may be different or corrupted\n", basename(f_name));
-
-	if(f_name_flag == false && f_hash_flag == true)
-		printf("\033[33mNotice\033[0m: This file was found in database but with a different name\n"); 
 
 	sqlite3_finalize(stmt);
 
