@@ -88,12 +88,6 @@ Printa o menu de ajuda na tela.
 
 ##  Funcionalidades Planejadas (To-Do)
 
-- [X] Finalizar a verificação completa de integridade
+- [ ] Comparação direta via linha de comando
 - [ ] Opção de **shred**
-- [X] Exportar hashes de diretórios inteiros em formato padrão
-- [X] Suporte a outros algoritmos de hash (ex: SHA-512)
-- [X] Melhorias no parser de argumentos CLI
 - [ ] Outros...
-      
-      
-
