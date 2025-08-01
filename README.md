@@ -23,6 +23,11 @@ Você pode Instalar o Falcon facilmente com os seguintes comandos no terminal:
     ./installer.sh
 ```
 
+Você pode reinstalar o falcom com:
+```bash
+    ./installer re
+```
+
 Você pode desinstalar o falcon completamente usando:
 
 ```bash
