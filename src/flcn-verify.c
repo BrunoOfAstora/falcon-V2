@@ -1,5 +1,6 @@
 #include "falconinit.h"
 #include <sqlite3.h>
+#include <openssl/crypto.h>
 
 typedef struct Compare_att
 {
@@ -113,7 +114,7 @@ int flcn_verify(char *f_name)
 		size_t leng1 = strlen(cmp.f_name);
 		size_t leng2 = strlen(abs_f_name);
 
-		if(sec_memcmp(cmp.f_name, abs_f_name, leng1) == true && leng1 == leng2) 
+		if(sec_memcmp(cmp.f_name, abs_f_name, leng2) == true && leng1 == leng2) 
 			f_name_flag = true;
 	
 		if(sec_memcmp(cmp.hash, f_hash, 32) == true)

@@ -61,7 +61,6 @@ Após compilar o Falcon, você poderá executar os seguintes comandos diretament
 | `falcon --md5 <arquivo>`           | Calcula o hash **MD5** de um arquivo             |
 | `falcon --sha256 <arquivo>`        | Calcula o hash **SHA-256**                      |
 | `falcon --sha384 <arquivo>`        | Calcula o hash **SHA-384**                       |    
-| `falcon --sha512 <arquivo>`        | Calcula o hash **SHA-512**                       |
 | `falcon --rmdup`                   | Remove arquivos duplicados no diretório atual   |
 | `falcon --verify <arquivo>`                  | Verifica integridade com base nos hashes salvos (Parcial) |
 | `falcon --help` ou `falcon -h`   | Exibe o menu de ajuda                           |
@@ -71,7 +70,7 @@ Após compilar o Falcon, você poderá executar os seguintes comandos diretament
 ## falcon -s ou --save < arquivo >: 
 Ao ser chamado, recebe um argumento, calcula o hash SHA256 do arquivo e salva na pasta "flcn-hash" junto ao nome original do arquivo dentro do diretório home, assim sempre que for verificado com a função "verify" ou com alguma outra função, o programa busca sempre pelo mesmo diretório, o que torna essa busca mais organizada.
 
-## falcon -m  or --md5, -2 ou --sha256, -3 ou sha384, -5 ou --sha512 < arquivo >:
+## falcon -m  or --md5, -2 ou --sha256, -3 ou sha384
 Ao ser chamado, calcula o HASH do arquivo especificado pelo usuário e printa na tela.
 
 ## falcon -r ou --rmdup:
@@ -88,7 +87,6 @@ Printa o menu de ajuda na tela.
 - ✅ Cálculo de hash **MD5**
 - ✅ Cálculo de hash **SHA-256**
 - ✅ Cálculo de hash **SHA-384**
-- ✅ Cálculo de hash **SHA-512**
 - ✅ Salvamento de hashes e nomes de arquivos em um Banco de Dados para posterior verificação
 - ✅ Remoção de duplicatas em qualquer diretório
 - ✅ Verificação de integridade (comparação de hashes salvos)

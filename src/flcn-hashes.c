@@ -191,184 +191,163 @@ end_func:
 //				**********
 //				**SHA384**	
 //				**********
-char *flcn_384_hash( const char *usr_in )
+
+char *flcn_384_hash(const char *usr_in)
 {
-	struct FalconHashInit *flcn_init = malloc(sizeof(struct FalconHashInit));
-
-	char *ret_val = NULL;
-
-	if(flcn_init == NULL || usr_in == NULL)
+    struct FalconHashInit *flcn_init = malloc(sizeof(*flcn_init));
+    if (!flcn_init || !usr_in) 
 	{
-		printf("Need to specify the file and initializer\\n");
-		return NULL;
-	}
+        fprintf(stderr, "Need to specify the file and initializer\n");
+        free(flcn_init);
+        return NULL;
+    }
 
-	flcn_init->file_usr_stream = fopen(usr_in, "rb");
-	if(!flcn_init->file_usr_stream)
+    FILE *f = fopen(usr_in, "rb");
+    if (!f) 
 	{
-		printf("Error while opening file\n");
-		goto end_func;
-	}
+        perror("Error opening file");
+        free(flcn_init);
+        return NULL;
+    }
+    flcn_init->file_usr_stream = f;
 
-
-	EVP_MD_CTX *s384_ctx = EVP_MD_CTX_new();
-	if(s384_ctx == NULL)
+    EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+    if (!ctx) 
 	{
-		perror("Error while creating EVP_MD_CTX_new\n");
-		goto end_func;
-	}
+        perror("Error creating EVP_MD_CTX");
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-
-	int evp_s384_init = EVP_DigestInit_ex(s384_ctx, EVP_sha384(), NULL);
-	if(!evp_s384_init)
+    if (!EVP_DigestInit_ex(ctx, EVP_sha384(), NULL)) 
 	{
-		perror("Error while initializing SHA384 hash Algorithim\n");
-		goto end_func;
-	}
+        perror("EVP_DigestInit_ex");
+        EVP_MD_CTX_free(ctx);
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-	
-	while((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), flcn_init->file_usr_stream)) > 0)
+    while ((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), f)) > 0) 
 	{
-		int evp_s384_update = EVP_DigestUpdate(s384_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
-		if(!evp_s384_update)
+        if (!EVP_DigestUpdate(ctx, flcn_init->md_hash_buf, flcn_init->bytes_read)) 
 		{
-			perror("Error While Updating SHA384 Hash\n");
-			goto end_func;
-		}
+            perror("EVP_DigestUpdate");
+            EVP_MD_CTX_free(ctx);
+            fclose(f);
+            free(flcn_init);
+            return NULL;
+        }
+    }
 
-	}
-
-	int evp_s384_digest_final = EVP_DigestFinal_ex(s384_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
-	if(!evp_s384_digest_final)
+    if (!EVP_DigestFinal_ex(ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng)) 
 	{
-		perror("Error Finishing SHA384 Update\n");
-		goto end_func;
-	}
+        perror("EVP_DigestFinal_ex");
+        EVP_MD_CTX_free(ctx);
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-	EVP_MD_CTX_free(s384_ctx);
-	fclose(flcn_init->file_usr_stream);
+    EVP_MD_CTX_free(ctx);
+    fclose(f);
 
-	flcn_init->hex_hash_result = malloc( 2 * flcn_init->hash_md_leng + 1 );
-	if(!flcn_init->hex_hash_result)
-	{
-		perror("Error: Failed To Allocate Memory For The Hash Result\n");
-		goto end_func;
-	}
-	
-	size_t i;
-	for(i = 0; i < flcn_init->hash_md_leng; i++)
-		snprintf(&flcn_init->hex_hash_result[i * 2], 32,"%02x", flcn_init->md_hash_buf[i]);
+    char *hex_hash = malloc(2 * flcn_init->hash_md_leng + 1);
+    if (!hex_hash) {
+        perror("malloc hex_hash");
+        free(flcn_init);
+        return NULL;
+    }
 
-	flcn_init->hex_hash_result[i * 2] = '\0';
-			
-	ret_val = flcn_init->hex_hash_result;
-	return ret_val;
+    for (size_t i = 0; i < flcn_init->hash_md_leng; i++)
+        sprintf(&hex_hash[i * 2], "%02x", flcn_init->md_hash_buf[i]);
+    hex_hash[flcn_init->hash_md_leng * 2] = '\0';
 
-end_func:
-
-	if(flcn_init->file_usr_stream)
-		fclose(flcn_init->file_usr_stream);
-
-	if(flcn_init->hex_hash_result)
-		free(flcn_init->hex_hash_result);
-
-	if(flcn_init)
-		free(flcn_init);
-
-	return ret_val;
-
+    free(flcn_init);
+    return hex_hash; 
 }
 
 
 //				**********
 //				**SHA512**	
-//				**********
-char *flcn_512_hash( const char *usr_in )
+/*				**********
+char *flcn_512_hash(const char *usr_in)
 {
-	struct FalconHashInit *flcn_init = malloc(sizeof(struct FalconHashInit));
-
-	char *ret_val = NULL;
-
-	if(flcn_init == NULL || usr_in == NULL)
+    struct FalconHashInit *flcn_init = malloc(sizeof(*flcn_init));
+    if (!flcn_init || !usr_in) 
 	{
-		perror("Need to specify the file and initializer\n");
-		return NULL;
-	}
+        fprintf(stderr, "Need to specify the file and initializer\n");
+        free(flcn_init);
+        return NULL;
+    }
 
-	flcn_init->file_usr_stream = fopen(usr_in, "rb");
-	if(!flcn_init->file_usr_stream)
+    FILE *f = fopen(usr_in, "rb");
+    if (!f) 
 	{
-		printf("Error while opening file\n");
-		goto end_func;
-	}
+        perror("Error opening file");
+        free(flcn_init);
+        return NULL;
+    }
+    flcn_init->file_usr_stream = f;
 
-
-	EVP_MD_CTX *s512_ctx = EVP_MD_CTX_new();
-	if(s512_ctx == NULL)
+    EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+    if (!ctx) 
 	{
-		perror("Error while creating EVP_MD_CTX_new\n");
-		goto end_func;
-	}
+        perror("Error while creating EVP_MD_CTX");
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-
-	int evp_s512_init = EVP_DigestInit_ex(s512_ctx, EVP_sha512(), NULL);
-	if(!evp_s512_init)
+    if (!EVP_DigestInit_ex(ctx, EVP_sha512(), NULL)) 
 	{
-		perror("Error while initializing SHA512 hash Algorithim\n");
-		goto end_func;
-	}
+        perror("error in: EVP_DigestInit_ex");
+        EVP_MD_CTX_free(ctx);
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-	
-	while((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), flcn_init->file_usr_stream)) > 0)
+    while ((flcn_init->bytes_read = fread(flcn_init->md_hash_buf, 1, sizeof(flcn_init->md_hash_buf), f)) > 0) 
 	{
-		int evp_s512_update = EVP_DigestUpdate(s512_ctx, flcn_init->md_hash_buf, flcn_init->bytes_read);
-		if(!evp_s512_update)
+        if (!EVP_DigestUpdate(ctx, flcn_init->md_hash_buf, flcn_init->bytes_read)) 
 		{
-			perror("Error While Updating SHA512 Hash\n");
-			goto end_func;
-		}
+            perror("error in: EVP_DigestUpdate");
+            EVP_MD_CTX_free(ctx);
+            fclose(f);
+            free(flcn_init);
+            return NULL;
+        }
+    }
 
-	}
-
-	int evp_s512_digest_final = EVP_DigestFinal_ex(s512_ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng);
-	if(!evp_s512_digest_final)
+    if (!EVP_DigestFinal_ex(ctx, flcn_init->md_hash_buf, &flcn_init->hash_md_leng)) 
 	{
-		perror("Error Finishing SHA512 Update\n");
-		goto end_func;
-	}
+        perror("error in: EVP_DigestFinal_ex");
+        EVP_MD_CTX_free(ctx);
+        fclose(f);
+        free(flcn_init);
+        return NULL;
+    }
 
-	EVP_MD_CTX_free(s512_ctx);
-	fclose(flcn_init->file_usr_stream);
+    EVP_MD_CTX_free(ctx);
+    fclose(f);
 
-	flcn_init->hex_hash_result = malloc( 2 * flcn_init->hash_md_leng + 1 );
-	if(!flcn_init->hex_hash_result)
-	{
-		perror("Error: Failed To Allocate Memory For The Hash Result\n");
-		goto end_func;
-	}
-	
-	size_t i;
-	for(i = 0; i < flcn_init->hash_md_leng; i++)
-		snprintf(&flcn_init->hex_hash_result[i * 2], 32,"%02x", flcn_init->md_hash_buf[i]);
+    char *hex_hash = malloc(2 * flcn_init->hash_md_leng + 1);
+    if (!hex_hash) {
+        perror("malloc hex_hash");
+        free(flcn_init);
+        return NULL;
+    }
 
-	flcn_init->hex_hash_result[i * 2] = '\0';
-			
-	ret_val = flcn_init->hex_hash_result;
-	return ret_val;
+    for (size_t i = 0; i < flcn_init->hash_md_leng; i++)
+        sprintf(&hex_hash[i * 2], "%02x", flcn_init->md_hash_buf[i]);
+    hex_hash[flcn_init->hash_md_leng * 2] = '\0';
 
-end_func:
-
-	if(flcn_init->file_usr_stream)
-		fclose(flcn_init->file_usr_stream);
-
-	if(flcn_init->hex_hash_result)
-		free(flcn_init->hex_hash_result);
-
-	if(flcn_init)
-		free(flcn_init);
-
-	return ret_val;
-
+    free(flcn_init);
+    return hex_hash; 
 }
+
+*/
 
 

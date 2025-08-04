@@ -131,4 +131,8 @@ int verify_callback(const char *f_path, const struct stat *st, int flag, struct 
 
 int rmdup();
 
+
+int flcn_cmp_hash(const char *f1, const char *f2);
+
+
 #endif
