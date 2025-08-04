@@ -40,8 +40,12 @@ Caso queira fazerr alterações e compilar por conta prórpia:
 
 ```bash
 git clone https://github.com/BrunoOfAstora/falcon-V2.git
+
 cd falcon
+
 make
+
+./installer.sh
 ```
 
 O binário `falcon` será gerado na pasta raiz do projeto.
