@@ -6,7 +6,7 @@
 O principal objetivo é fornecer um conjunto de utilitários para :
 
 - Calcular e verificar hashes (ex: **SHA-256**, **SHA-384**, **MD5**)
-- Realizar operações seguras de remoção de arquivos (**shred**, futuramente)
+- Realizar operações seguras de remoção de arquivos (**shred**)
 - Detectar duplicatas
 - Trabalhar com banco de dados de checksums
 
