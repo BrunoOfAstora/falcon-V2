@@ -96,5 +96,5 @@ Printa o menu de ajuda na tela.
 ##  Funcionalidades Planejadas (To-Do)
 
 - [ ] Comparação direta via linha de comando
-- [ ] Opção de **shred**
+- [ ] Opção de **shred**(W.I.P)
 - [ ] Outros...
