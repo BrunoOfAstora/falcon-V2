@@ -97,4 +97,5 @@ Printa o menu de ajuda na tela.
 
 - [ ] Comparação direta via linha de comando
 - [ ] Opção de **shred**(W.I.P)
+- [ ] Adicionar libsodium para robustez
 - [ ] Outros...
