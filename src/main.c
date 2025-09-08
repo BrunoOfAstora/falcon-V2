@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
                // printf("-5 or --sha512           Return hash SHA512 of file\n");
                 printf("-s or --save             Save the file name and file hash in the data base\n");
                 printf("-r or --rmdup            Iterates over current directory and remove duplicated files\n"); 
-				printf("-c or --cmp				 Compare two given files\n")
+				printf("-c or --cmp				 Compare two given files\n");
                 break;
 
             default:
