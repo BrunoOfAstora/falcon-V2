@@ -81,32 +81,14 @@ extern flcn_save *flcn_save_init;
 void _save_init();
 void _save_deinit(void);
 
-//		******************
-//		**HASH Functions**
-//		******************
 
-//Returns the MD5 hash of the file passed
-char *flcn_md5_hash(const char *usr_in);
-
-
-//Returns the SHA256 hash of the file passed
-char *flcn_256_hash(const char *usr_in);
-
-
-//Returns the SHA384 hash of the file passed
-char *flcn_384_hash(const char *usr_in);
-
-
-//Returns the SHA512 hash of the file passed
-char *flcn_512_hash(const char *usr_in);
-
-
+//Hash functions moved (!)
 
 //		******************
 //		**Save Functions**
 //		******************
 
-//Saves the file name and fiel hash in a DB (SQLite3)
+//Saves the file name and file hash in a DB (SQLite3)
 int save_in_db(char *f_name);
 
 int save_in_db_all(const char *start_path);

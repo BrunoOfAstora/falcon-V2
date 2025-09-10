@@ -1,4 +1,5 @@
 #include "falconinit.h"
+#include "flcn-hashes.h"
 
 int main(int argc, char *argv[])
 {
@@ -54,22 +55,22 @@ int main(int argc, char *argv[])
                         return -1;
                 }
 
-                char *md5_print = flcn_md5_hash(optarg); 
-                if(md5_print == NULL)
+                char *flcn_build_hash_md5 = flcn_build_hash(optarg, EVP_md5);
+                if(flcn_build_hash_md5 == NULL)
                 {
                     printf("The file doesn't exist or can't be opened, or an error occurred during hash calculation.\n");
                     return -1;
                 }
 
                 printf("\033[32mDONE!\033[0m\n");
-                printf("MD5: %s\n", md5_print);
-                free(md5_print); 
+                printf("MD5: %s\n", flcn_build_hash_md5);
+                free(flcn_build_hash_md5);
                 break;
             }
 
             case '2':
             {
-                printf("Calculating SHA256...");
+                printf("Calculating hash...");
                 fflush(stdout);
                 if(optarg[0] == '-')
                 {
@@ -77,16 +78,16 @@ int main(int argc, char *argv[])
                         return -1;
                 }
 
-                char *sha256_print = flcn_256_hash(optarg); 
-                if(sha256_print == NULL)
+                char *flcn_build_hash256 = flcn_build_hash(optarg, EVP_sha256());
+                if(flcn_build_hash256 == NULL)
                 {
                     printf("The file doesn't exist or can't be opened, or an error occurred during hash calculation.\n");
                     return -1;
                 }
 
                 printf("\033[32mDONE!\033[0m\n");
-                printf("SHA256: %s\n", sha256_print);
-                free(sha256_print); 
+                printf("SHA256: %s\n", flcn_build_hash256);
+                free(flcn_build_hash256);
                 break;
             }
 
@@ -101,16 +102,16 @@ int main(int argc, char *argv[])
                         return -1;
                 }
 
-                char *sha384_print = flcn_384_hash(optarg);
-                if(sha384_print == NULL)
+                char *flcn_build_hash_sha384 = flcn_build_hash(optarg, EVP_sha384());
+                if(flcn_build_hash_sha384 == NULL)
                 {
                     printf("The file doesn't exist or can't be opened, or an error occurred during hash calculation.\n");
                     return -1;
                 }
 
                 printf("\033[32mDONE!\033[0m\n");
-                printf("SHA384: %s\n", sha384_print);
-                free(sha384_print); 
+                printf("SHA384: %s\n", flcn_build_hash_sha384);
+                free(flcn_build_hash_sha384);
                 break;
             }
 

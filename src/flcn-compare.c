@@ -1,15 +1,17 @@
 #include "falconinit.h"
+#include "flcn-hashes.h"
 #include <openssl/crypto.h>
+
+#include "flcn-hashes.h"
 
 int flcn_cmp_hash(const char *f1, const char *f2)
 {
-
 	if(f1 == NULL || f2 == NULL)
 		return -1;
 
-	char *f1_hash = flcn_384_hash(f1);
+	char *f1_hash = flcn_build_hash(f1, EVP_sha384());
 
-	char *f2_hash = flcn_384_hash(f2);
+	char *f2_hash = flcn_build_hash(f2, EVP_sha384());
 
 	if(f1_hash == NULL || f2_hash == NULL)
 	{
