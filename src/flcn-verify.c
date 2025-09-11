@@ -2,6 +2,8 @@
 #include <sqlite3.h>
 #include <openssl/crypto.h>
 
+#include "flcn-hashes.h"
+
 typedef struct Compare_att
 {
 	char *hash;
@@ -97,7 +99,7 @@ int flcn_verify(char *f_name)
 		return 1;
 	}
 
-	const char *f_hash = flcn_256_hash(f_name);	
+	const char *f_hash = flcn_build_hash(f_name, EVP_sha256());
 	if(f_hash == NULL)
 	{
 		printf("Error opening file to calculate Hash\n");

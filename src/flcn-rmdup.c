@@ -1,4 +1,5 @@
 #include "falconinit.h"
+#include "flcn-hashes.h"
 
 typedef struct temp
 {
@@ -31,7 +32,7 @@ int rmdup()
 		if(dir->d_type == DT_REG)
 		{
 			const char *curr_fname = dir->d_name;
-			char *curr_hash = flcn_256_hash(curr_fname);
+			char *curr_hash = flcn_build_hash(curr_fname, EVP_sha256());
 			if(curr_hash == NULL)
 				continue;
 			

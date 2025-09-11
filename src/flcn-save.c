@@ -1,4 +1,5 @@
 #include "falconinit.h"
+#include "flcn-hashes.h"
 #include <sqlite3.h>
 
 
@@ -83,7 +84,7 @@ int save_in_db(char *f_name)
 
 	sqlite3_finalize(stmt);
 	
-	flcn_save->f_hash = flcn_256_hash(f_name);
+	flcn_save->f_hash = flcn_build_hash(f_name, EVP_sha256());
 
 	if((sqlite3_prepare_v2(db, sql_insert, -1, &stmt, NULL)) != SQLITE_OK)
 	{

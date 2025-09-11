@@ -1,7 +1,7 @@
 #include "flcn-hashes.h"
 //#include "../inc/flcn-hashes.h"
 
-char *flcn_build_hash(const char *file, EVP_MD *md_hash)
+char *flcn_build_hash(const char *file, const EVP_MD *md_hash)
 {
     FalconHash fh = flcn_open_file(file);
 

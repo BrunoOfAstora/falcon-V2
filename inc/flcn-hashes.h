@@ -7,7 +7,7 @@ typedef struct FalconHash
 {
     FILE *usr_file;
     EVP_MD_CTX *ctx;
-    unsigned char hash_buf[(16+20)];
+    unsigned char hash_buf[128];
     unsigned int hash_len;
 
 } FalconHash;
@@ -22,6 +22,6 @@ int flcn_digest_final(FalconHash *fh);
 
 int flcn_clean(FalconHash *fh, FILE *file);
 
-char *flcn_build_hash(const char *file, EVP_MD *md_hash);
+char *flcn_build_hash(const char *file, const EVP_MD *md_hash);
 
 #endif //FALCON_V2_FLCN_HASHES_H

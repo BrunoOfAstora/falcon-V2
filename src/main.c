@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
                         return -1;
                 }
 
-                char *flcn_build_hash_md5 = flcn_build_hash(optarg, EVP_md5);
+                char *flcn_build_hash_md5 = flcn_build_hash(optarg, EVP_md5());
                 if(flcn_build_hash_md5 == NULL)
                 {
                     printf("The file doesn't exist or can't be opened, or an error occurred during hash calculation.\n");
