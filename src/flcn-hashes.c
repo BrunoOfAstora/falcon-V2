@@ -6,9 +6,9 @@ FalconHash flcn_open_file(const char *user_input_file)
 	FalconHash fh = {0};
 
 	fh.usr_file = fopen(user_input_file, "rb");
-	if (!fh.usr_file)
+	if (fh.usr_file == NULL)
 	{
-		perror("fopen error");
+		perror("fopen error while calculating hash");
 	}
 	return fh;
 }

@@ -1,3 +1,6 @@
+#include <stddef.h>
+#include <openssl/types.h>
+
 #include "flcn-hashes.h"
 //#include "../inc/flcn-hashes.h"
 
@@ -29,4 +32,3 @@ char *flcn_build_hash(const char *file, const EVP_MD *md_hash)
     }
     return NULL;
 }
-

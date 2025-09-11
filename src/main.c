@@ -1,4 +1,5 @@
 #include "falconinit.h"
+#include "flcn-compare.h"
 #include "flcn-hashes.h"
 
 int main(int argc, char *argv[])
@@ -197,7 +198,7 @@ int main(int argc, char *argv[])
 				printf("Comparing files...\n");
 				fflush(stdout);
 
-				flcn_cmp_hash(argv[2], argv[3]);
+				flcn_compare_digest(argv[2], argv[3]);
 
 				break;
 
