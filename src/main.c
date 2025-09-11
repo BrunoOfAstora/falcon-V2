@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
             {"md5",     required_argument,  0, 'm'},
             {"sha256",  required_argument,  0, '2'},
             {"sha384",  required_argument,  0, '3'},
-           // {"sha512",  required_argument,  0, '5'},
+            {"sha512",  required_argument,  0, '5'},
             {"save",    required_argument,  0, 's'},
             {"verify",  required_argument,  0, 'v'},
             {"rmdup",   no_argument,        0, 'r'},
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
             {0,         0,                  0,  0 },
         };
 
-        opt = getopt_long(argc, argv, "m:2:3:s:v:rc:h", long_options, &opt_index);
+        opt = getopt_long(argc, argv, "m:2:3:5:s:v:rc:h", long_options, &opt_index);
         if(opt == -1)
                 break;
 
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
                 break;
             }
 
-          /*  case '5':
+            case '5':
             {
                 printf("Calculating SHA512...");
                 fflush(stdout);
@@ -126,19 +126,18 @@ int main(int argc, char *argv[])
                     fprintf(stderr, "Error: sha512 option require a file as argument, but got '%s' as argument instead\n", optarg);
                         return -1;
                 }
-                char *sha512_print = flcn_512_hash(optarg); // Use optarg
-                if(sha512_print == NULL)
+                char *flcn_build_hash_sha512 = flcn_build_hash(optarg, EVP_sha512()); // Use optarg
+                if(flcn_build_hash_sha512 == NULL)
                 {
                     printf("The file doesn't exist or can't be opened, or an error occurred during hash calculation.\n");
                     return -1;
                 }
 			
                 printf("\033[32mDONE!\033[0m\n");
-                printf("SHA512: %s\n", sha512_print);
-                free(sha512_print); 
+                printf("SHA512: %s\n", flcn_build_hash_sha512);
+                free(flcn_build_hash_sha512);
                 break;
             }
-			*/			
 
             case 's':
                 printf("Saving Hashes...");
