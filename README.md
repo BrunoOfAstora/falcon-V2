@@ -95,7 +95,7 @@ Printa o menu de ajuda na tela.
 
 ##  Funcionalidades Planejadas (To-Do)
 
-- [ ] Comparação direta via linha de comando
+- [X] Comparação direta via linha de comando
 - [ ] Opção de **shred**(W.I.P)
 - [ ] Adicionar libsodium para robustez
 - [ ] Outros...
