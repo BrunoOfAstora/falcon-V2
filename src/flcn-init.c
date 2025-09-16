@@ -1,45 +1,20 @@
-// 	flcn-init.c
-
 #include "falconinit.h"
+#include "flcn_init.h"
 
-
-char *flcn_GetHomeDir()
+char *flcn_get_home_dir()
 {
-	char *path_to_home_dir = getenv("HOME");
-	if(!path_to_home_dir)
-	{
-		perror("Failed to get HOME directory\n");
-		return NULL;
-	}
-	
-	return path_to_home_dir;
+	return getenv("HOME");
 }
 
-
-size_t flcn_SetHashDirInHome(char *out_path, size_t size)
+void flcn_build_db_path(DbPath *dbpath, size_t size, char *home_path)
 {
-
-	const char *home = flcn_GetHomeDir();
-	if(!home)
-		return 1;
-
-	if(snprintf(out_path, size, "%s/%s/", flcn_GetHomeDir(), ".falcon-hashes") >= PATH_MAX)
-		return 1;
-
-	return 0;
+	if (!home_path)
+		home_path = "/tmp";
+	snprintf(dbpath->db_path_buf, size, "%s/%s/", home_path, ".falcon-hashes");
 }
 
-
-
-size_t flcn_CreateDbFile(char *out_path, size_t size)
+void *flcn_build_file_in_db_path(DbPath *db_path, size_t size, const char *filename)
 {
-	char hash_dir[PATH_MAX];
-
-	if(flcn_SetHashDirInHome(hash_dir, sizeof(hash_dir)) != 0)
-		return 1;
-//File hidden by default
-	if(snprintf(out_path, size, "%s%s", hash_dir, ".falcon_file_hash.db") >= PATH_MAX)
-		return 1;
-
-	return 0;
+	size_t len = strnlen(db_path->db_path_buf, size);
+	snprintf(db_path->db_path_buf + len, size - len, "%s",filename);
 }
