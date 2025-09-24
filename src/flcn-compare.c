@@ -1,5 +1,5 @@
 #include "flcn-compare.h"
-#include "flcn-hashes.h"
+#include "flcn-hashes-handler.h"
 #include <openssl/crypto.h>
 
 CmpHash flcn_gen_hash(const char *file1, const char *file2)

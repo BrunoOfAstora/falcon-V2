@@ -1,7 +1,6 @@
 #include <string.h>
 #include "flcn-hashes-handler.h"
 #include "flcn-compare.h"
-#include "flcn_verify.h"
 #include "../inc/flcn-hashes-handler.h"
 
 int flcn_verify_digest(CmpHandler *cmp_handler, sqlite3 *db, sqlite3_stmt *stmt, const char *db_path,char *file_name)

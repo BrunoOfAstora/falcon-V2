@@ -1,5 +1,5 @@
 #include "falconinit.h"
-#include "flcn-hashes.h"
+#include "flcn-hashes-handler.h"
 
 FalconHash flcn_open_file(const char *user_input_file)
 {

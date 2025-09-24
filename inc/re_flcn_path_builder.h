@@ -1,0 +1,20 @@
+//
+// Created by revolver-ocelot on 9/22/25.
+//
+
+#ifndef FALCON_V2_RE_FLCN_PATH_BUILDER_H
+#define FALCON_V2_RE_FLCN_PATH_BUILDER_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <sys/stat.h>
+#include <string.h>
+
+char * flcn_get_home_dir();
+
+char * flcn_build_path_to_db(char *home_dir, char *database_dest);
+
+char * flcn_get_real_path(const char *file_name);
+
+#endif //FALCON_V2_RE_FLCN_PATH_BUILDER_H

@@ -60,52 +60,8 @@ typedef struct FalconHashInit
 	
 }flcn_init;
 
-typedef struct FalconSaveInit
-{
-	DIR *curr_dir;
-	
-	FILE *file_usr_stream;
-
-	char hash_folder_path[PATH_MAX];
-	
-	char full_db_path[PATH_MAX];
-
-	char *f_all_name;
-
-	char *f_hash;
-
-}flcn_save;
-
-extern flcn_save *flcn_save_init;
-
 void _save_init();
 void _save_deinit(void);
-
-
-//Hash functions moved (!)
-
-//		******************
-//		**Save Functions**
-//		******************
-
-//Saves the file name and file hash in a DB (SQLite3)
-int save_in_db(char *f_name);
-
-int save_in_db_all(const char *start_path);
-
-int save_in_db_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf);
-
-
-//		********************
-//		**Verify Functions**
-//		********************
-
-int flcn_verify(char *f_name);
-
-int flcn_verify_all(const char *start_path);
-
-int verify_callback(const char *f_path, const struct stat *st, int flag, struct FTW *ftwbuf);
-
 
 //		*******************
 //		*remove duplicates*
