@@ -5,6 +5,7 @@
 #include "../inc/re_flcn_main_handler.h"
 #include "../inc/re_flcn_main.h"
 #include "../inc/flcn-hashes-handler.h"
+#include "../inc/re_flcn_sqlite_operations_handler.h"
 
 void flcn_print_usage_msg(char *name)
 {
@@ -16,7 +17,7 @@ void flcn_print_func_usage_msg()
     printf("Error: This option requires a file as argument, but got '%s' as argument instead\n", optarg);
 }
 
-
+//Hashes
 char * flcn_calculate_hash(const char *mode, EVP_MD *md_hash)
 {
     printf("Calculating hash..."); FF;
@@ -36,6 +37,13 @@ char * flcn_calculate_hash(const char *mode, EVP_MD *md_hash)
     return hash;
 }
 
+int flcn_save_data_in_db(char *file)
+{
+    sqlite3 *db;
+    if ((re_save_in_db_create(&db)) != SQLITE_OK) return -1;
+    if ((re_save_in_db_insert(db, file)) != SQLITE_OK) return -2;
+    return 0;
+}
 
 
 

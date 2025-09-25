@@ -13,7 +13,7 @@
 
 char * flcn_get_home_dir();
 
-char * flcn_build_path_to_db(char *home_dir, char *database_dest);
+char * flcn_build_path_to_db(char *home_dir, char *database_dest); //you can use this like: char * x = flcn_build_path_to_db(flcn_get_home_dir(), x);
 
 char * flcn_get_real_path(const char *file_name);
 

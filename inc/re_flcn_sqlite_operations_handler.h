@@ -5,6 +5,7 @@
 #ifndef FALCON_V2_RE_FLCN_SQLITE_OPERATIONS_HANDLER_H
 #define FALCON_V2_RE_FLCN_SQLITE_OPERATIONS_HANDLER_H
 
+#include <sys/stat.h> //add stat to verify if input is a file
 #include <sqlite3.h>
 #include <string.h>
 
@@ -30,9 +31,9 @@ int flcn_dboperations_db_bind_text(sqlite3_stmt *stmt, int pos,const char *file_
 
 int flcn_dboperations_step_db(sqlite3_stmt *stmt);
 
-void flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt);
+int flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt);
 
-void flcn_dboperations_close_db(sqlite3 *db);
+int flcn_dboperations_close_db(sqlite3 *db);
 
 char *flcn_dboperations_column_strdup(sqlite3_stmt *stmt, int column);
 

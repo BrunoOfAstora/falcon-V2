@@ -28,22 +28,17 @@ int flcn_dboperations_step_db(sqlite3_stmt *stmt)
     return -1;
 }
 
-void flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt)
+int flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt)
 {
-    sqlite3_finalize(stmt);
+    return sqlite3_finalize(stmt);
 }
 
-void flcn_dboperations_close_db(sqlite3 *db)
+int flcn_dboperations_close_db(sqlite3 *db)
 {
-    sqlite3_close(db);
+    return sqlite3_close(db);
 }
 
 char *flcn_dboperations_column_strdup(sqlite3_stmt *stmt, int column)
 {
     return strdup((const char *)sqlite3_column_text(stmt, column));
 }
-
-/*int flcn_crypto_cmp(char *str1, char *str2, size_t len)//THIS DONT BELONG HERE!!
-{
-    return CRYPTO_memcmp(str1, str2, len);
-}*/

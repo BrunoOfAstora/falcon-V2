@@ -26,5 +26,6 @@
 char * flcn_calculate_hash(const char *mode, EVP_MD *md_hash);
 void flcn_print_func_usage_msg();
 void flcn_print_usage_msg(char *name);
+int flcn_save_data_in_db(char *file);
 
 #endif //FALCON_V2_RE_FLCN_MAIN_HANDLER_H

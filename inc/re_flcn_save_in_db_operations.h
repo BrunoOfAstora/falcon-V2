@@ -7,8 +7,7 @@
 
 #include <sqlite3.h>
 
-int flcn_create_db(sqlite3 **db);
-int flcn_save_name_and_hash_in_db(char *file, sqlite3 *db);
-int flcn_close_db(sqlite3 *db);
+int re_save_in_db_create(sqlite3 **db);
+int re_save_in_db_insert(sqlite3 *db, char *file);
 
 #endif //FALCON_V2_RE_FLCN_SAVE_IN_DB_OPERATIONS_H

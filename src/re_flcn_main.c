@@ -66,6 +66,19 @@ int main(int argc, char *argv[])
                     printf("SHA512: %s\n", hash);
                 break;
             }
+
+        case 's':
+            {
+               printf("Saving HASH in DB...");
+                if ((flcn_save_data_in_db(optarg)) != 0)
+                {
+                    printf("\n Error saving file.");
+                    return -1;
+                }
+                printf("\033[32mDONE!\033[0m\n");
+                break;
+            }
+
         }
     }
 }
