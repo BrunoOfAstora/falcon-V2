@@ -21,11 +21,7 @@ int flcn_dboperations_db_bind_text(sqlite3_stmt *stmt, int pos,const char *file_
 
 int flcn_dboperations_step_db(sqlite3_stmt *stmt)
 {
-    int step = sqlite3_step(stmt);//is this easier to read? maybe
-    if (step == SQLITE_ROW) return FLCN_DB_ROW;
-    if (step == SQLITE_DONE) return FLCN_DB_DONE;
-    if (step == SQLITE_ERROR) return FLCN_DB_ERROR;
-    return -1;
+     return sqlite3_step(stmt);//is this easier to read? maybe
 }
 
 int flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt)

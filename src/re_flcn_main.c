@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
                printf("Saving HASH in DB...");
                 if ((flcn_save_data_in_db(optarg)) != 0)
                 {
-                    printf("\n Error saving file.");
+                    printf("\n Error saving file.\n");
                     return -1;
                 }
                 printf("\033[32mDONE!\033[0m\n");

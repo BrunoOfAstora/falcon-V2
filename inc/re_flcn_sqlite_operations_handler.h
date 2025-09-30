@@ -21,7 +21,7 @@ typedef enum
     FLCN_DB_ROW,
     FLCN_DB_DONE,
     FLCN_DB_ERROR
-};
+}flcn_db_stat;
 
 int flcn_dboperations_open_db(const char *db_path, sqlite3 **db, int flags);
 

@@ -18,7 +18,7 @@ void flcn_print_func_usage_msg()
 }
 
 //Hashes
-char * flcn_calculate_hash(const char *mode, EVP_MD *md_hash)
+char * flcn_calculate_hash(const char *mode,const EVP_MD *md_hash)
 {
     printf("Calculating hash..."); FF;
     if (mode[0] == '-')

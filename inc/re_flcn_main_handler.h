@@ -23,7 +23,7 @@
 
 #define FLCN_SHORTOPTS "m:2:3:5:s:v:rc:h"
 
-char * flcn_calculate_hash(const char *mode, EVP_MD *md_hash);
+char * flcn_calculate_hash(const char *mode, const EVP_MD *md_hash);
 void flcn_print_func_usage_msg();
 void flcn_print_usage_msg(char *name);
 int flcn_save_data_in_db(char *file);
