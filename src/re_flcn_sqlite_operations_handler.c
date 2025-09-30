@@ -21,7 +21,7 @@ int flcn_dboperations_db_bind_text(sqlite3_stmt *stmt, int pos,const char *file_
 
 int flcn_dboperations_step_db(sqlite3_stmt *stmt)
 {
-     return sqlite3_step(stmt);//is this easier to read? maybe
+     return sqlite3_step(stmt);
 }
 
 int flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt)

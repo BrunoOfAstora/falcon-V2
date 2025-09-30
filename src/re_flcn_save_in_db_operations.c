@@ -28,6 +28,14 @@ int re_save_in_db_insert(sqlite3 *db, char *file)
     if (db == NULL || file == NULL)
         return -1;
 
+    struct stat st;
+
+    if (stat(file, &st) != 0)
+        return -2;
+
+    if (!S_ISREG(st.st_mode))
+        return -3;
+
     sqlite3_stmt *stmt;
     const char *file_hash = flcn_build_hash(file, EVP_sha256());
     const char *abs_file = realpath(file, NULL);
