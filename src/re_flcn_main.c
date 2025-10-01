@@ -3,6 +3,8 @@
 //
 
 #include "../inc/re_flcn_main.h"
+
+#include "../inc/re_flcn_compare.h"
 #include "../inc/re_flcn_main_handler.h"
 
 int main(int argc, char *argv[])
@@ -70,6 +72,12 @@ int main(int argc, char *argv[])
         case 's':
             {
                printf("Saving HASH in DB...");
+                struct stat st;
+                if (flcn_check_valid_file(optarg, st) != 0)
+                    return -2;
+                if (flcn_check_reg_file(&st) != 0)
+                    return -3;
+
                 if ((flcn_save_data_in_db(optarg)) != 0)
                 {
                     printf("\n Error saving file.\n");
@@ -77,6 +85,15 @@ int main(int argc, char *argv[])
                 }
                 printf("\033[32mDONE!\033[0m\n");
                 break;
+            }
+
+        case 'c':
+            {
+                printf("Comparing files...");
+                int f = 0;
+                if ( f = flcn_cmp(argv[optind], argv [optind + 1]) == 0)
+                    printf("OK: The Files Are The Same: %d", f);
+                return 0;
             }
 
         }

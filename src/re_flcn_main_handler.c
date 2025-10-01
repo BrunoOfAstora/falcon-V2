@@ -45,8 +45,17 @@ int flcn_save_data_in_db(char *file)
     return 0;
 }
 
+int flcn_check_valid_file(const char *file, struct stat st)
+{
+    if (stat(file, &st) != 0)
+        return 1;
 
+    return 0;
+}
 
-
-
-
+int flcn_check_reg_file(const struct stat *st)
+{
+    if (S_ISREG(st->st_mode) != 0)
+        return 1;
+    return 0;
+}
