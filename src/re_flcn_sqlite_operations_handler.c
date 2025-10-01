@@ -3,6 +3,8 @@
 //
 
 #include "../inc/re_flcn_sqlite_operations_handler.h"
+#include <sys/stat.h>
+#include <string.h>
 
 int flcn_dboperations_open_db(const char *db_path, sqlite3 **db, int flags)
 {

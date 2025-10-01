@@ -4,6 +4,10 @@
 #include "../inc/re_flcn_path_builder.h"
 
 #include <linux/limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <string.h>
 
 char * flcn_get_real_path(const char *file_name)
 {

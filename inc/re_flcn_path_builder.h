@@ -5,12 +5,6 @@
 #ifndef FALCON_V2_RE_FLCN_PATH_BUILDER_H
 #define FALCON_V2_RE_FLCN_PATH_BUILDER_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <sys/stat.h>
-#include <string.h>
-
 char * flcn_get_home_dir();
 
 char * flcn_build_path_to_db(char *home_dir, char *database_dest); //you can use this like: char * x = flcn_build_path_to_db(flcn_get_home_dir(), x);

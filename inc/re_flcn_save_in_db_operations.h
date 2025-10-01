@@ -4,7 +4,6 @@
 
 #ifndef FALCON_V2_RE_FLCN_SAVE_IN_DB_OPERATIONS_H
 #define FALCON_V2_RE_FLCN_SAVE_IN_DB_OPERATIONS_H
-
 #include <sqlite3.h>
 
 int re_save_in_db_create(sqlite3 **db);

@@ -4,12 +4,10 @@
 
 #include "re_flcn_compare_handler.h"
 
-#include <stddef.h>
 #include <string.h>
 #include <sys/stat.h>
 
 #include "../inc/re_flcn_main_handler.h"
-#include "../inc/re_flcn_path_builder.h"
 
 int flcn_cmp_hashes(const char *file1, const char *file2)
 {

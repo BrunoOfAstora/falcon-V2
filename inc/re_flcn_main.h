@@ -8,5 +8,4 @@
 #include "re_flcn_save_in_db_operations.h"
 #include <stdio.h>
 
-
 #endif //FALCON_V2_RE_FLCN_MAIN_H

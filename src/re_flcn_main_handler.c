@@ -7,11 +7,11 @@
 #include "../inc/flcn-hashes-handler.h"
 #include "../inc/re_flcn_sqlite_operations_handler.h"
 
-void flcn_print_usage_msg(char *name)
+/*void flcn_print_usage_msg(char *name)
 {
     printf("a");
 }
-
+*/
 void flcn_print_func_usage_msg()
 {
     printf("Error: This option requires a file as argument, but got '%s' as argument instead\n", optarg);

@@ -3,7 +3,6 @@
 //
 
 #include "../inc/re_flcn_main.h"
-
 #include "../inc/re_flcn_compare_handler.h"
 #include "../inc/re_flcn_main_handler.h"
 

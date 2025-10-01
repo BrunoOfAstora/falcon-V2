@@ -4,7 +4,6 @@
 
 #ifndef FALCON_V2_RE_FLCN_COMPARE_HANDLER_H
 #define FALCON_V2_RE_FLCN_COMPARE_HANDLER_H
-#include <linux/limits.h>
 
 int flcn_cmp_hashes(const char *file1, const char *file2);
 

@@ -5,16 +5,14 @@
 #ifndef FALCON_V2_RE_FLCN_SQLITE_OPERATIONS_HANDLER_H
 #define FALCON_V2_RE_FLCN_SQLITE_OPERATIONS_HANDLER_H
 
-#include <sys/stat.h> //add stat to verify if input is a file
-#include <sqlite3.h>
-#include <string.h>
-
 #define FLCN_SQLITE_OPEN_RW SQLITE_OPEN_READWRITE
 #define FLCN_SQLITE_OPEN_CR SQLITE_OPEN_CREATE
 
 #define FLCN_SQL_REQUEST "SELECT f_name, f_hash FROM flcn_hashes WHERE f_name = ?"
 #define FLCN_SQLITE_CREATE_TABLE "CREATE TABLE IF NOT EXISTS flcn_hashes (f_name TEXT PRIMARY KEY, f_hash TEXT NOT NULL)"
 #define FLCN_SQLITE_INSERT_TABLE "REPLACE INTO flcn_hashes (f_name, f_hash) VALUES (?, ?)"
+
+#include <sqlite3.h>
 
 typedef enum
 {
