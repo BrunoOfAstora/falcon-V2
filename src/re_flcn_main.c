@@ -4,7 +4,7 @@
 
 #include "../inc/re_flcn_main.h"
 
-#include "../inc/re_flcn_compare.h"
+#include "../inc/re_flcn_compare_handler.h"
 #include "../inc/re_flcn_main_handler.h"
 
 int main(int argc, char *argv[])
@@ -89,13 +89,15 @@ int main(int argc, char *argv[])
 
         case 'c':
             {
-                printf("Comparing files...");
-                int f = 0;
-                if ( f = flcn_cmp(argv[optind], argv [optind + 1]) == 0)
-                    printf("OK: The Files Are The Same: %d", f);
+                printf("Comparing files...\n");
+                const int result = flcn_cmp_hashes(argv[2], argv [3]);
+
+                    if (result == 0)
+                    printf("\n\033[32mOK\033[0m: The Files Are The Same: %d\n", result);
+                else
+                    printf("\n\033[31mFAILED\033[0m: Different files: %d\n", result);
                 return 0;
             }
-
         }
     }
 }

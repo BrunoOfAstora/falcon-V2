@@ -31,5 +31,4 @@ int flcn_save_data_in_db(char *file);
 int flcn_check_valid_file(const char *file, struct stat st);
 int flcn_check_reg_file(const struct stat *st);
 
-
 #endif //FALCON_V2_RE_FLCN_MAIN_HANDLER_H

@@ -49,7 +49,6 @@ int flcn_check_valid_file(const char *file, struct stat st)
 {
     if (stat(file, &st) != 0)
         return 1;
-
     return 0;
 }
 
