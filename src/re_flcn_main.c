@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
             {FLCN_SHA256_OPT},
             {FLCN_SHA384_OPT},
             {FLCN_SHA512_OPT},
+            {FLCN_SAVE_OPT},
+            {FLCN_CMP_OPT},
             {FLCN_END_OPT},
         };
         opt = getopt_long(argc, argv, FLCN_SHORTOPTS, long_options, &opt_ind);
