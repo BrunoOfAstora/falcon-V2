@@ -6,6 +6,7 @@
 #define FALCON_V2_RE_FLCN_MAIN_HANDLER_H
 
 #include <getopt.h>
+#include <sqlite3.h>
 #include <openssl/evp.h>
 #include <sys/stat.h>
 
@@ -30,5 +31,6 @@ void flcn_print_usage_msg(char *name);
 int flcn_save_data_in_db(char *file);
 int flcn_check_valid_file(const char *file, struct stat st);
 int flcn_check_reg_file(const struct stat *st);
+int flcn_verify_integrity(const char *file_name);
 
 #endif //FALCON_V2_RE_FLCN_MAIN_HANDLER_H

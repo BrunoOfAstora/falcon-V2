@@ -99,6 +99,11 @@ int main(int argc, char *argv[])
                     printf("\n\033[31mFAILED\033[0m: Different files: %d\n", result);
                 return 0;
             }
+
+        case 'v':
+            {
+              flcn_verify_integrity(optarg);
+            }
         }
     }
 }

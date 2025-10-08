@@ -6,6 +6,7 @@
 #include "../inc/re_flcn_main.h"
 #include "../inc/flcn-hashes-handler.h"
 #include "../inc/re_flcn_sqlite_operations_handler.h"
+#include "../inc/re_flcn_verify.h"
 
 /*void flcn_print_usage_msg(char *name)
 {
@@ -57,4 +58,19 @@ int flcn_check_reg_file(const struct stat *st)
     if (S_ISREG(st->st_mode) != 0)
         return 1;
     return 0;
+}
+
+int flcn_verify_integrity(const char *file_name)
+{
+    int vrfy = flcn_verify(file_name);
+    if (vrfy == 0)
+        printf("\nFile Status: \033[32mOK\033[0m\n The file is intact");
+    if (vrfy == 1)
+        printf("\nFile Status: \033[32mOK\033[0m\n (The file have a diff name, but the hash match)\n");
+    if (vrfy == 2)
+        printf("\nFile Status: \033[31mFailed\033[0m. \n The file is corrupted or it was modified.\n");
+    if (vrfy == 3)
+        printf("\031[32mFailed\033[0m: The file was not found in database.\nYou need to save the file information with the command: falcon -s <file>\n");
+
+    return vrfy;
 }
