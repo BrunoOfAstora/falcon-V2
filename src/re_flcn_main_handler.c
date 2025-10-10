@@ -43,6 +43,14 @@ int flcn_save_data_in_db(char *file)
     sqlite3 *db;
     if ((re_save_in_db_create(&db)) != SQLITE_OK) return -1;
     if ((re_save_in_db_insert(db, file)) != SQLITE_OK) return -2;
+    sqlite3_close(db);
+    return 0;
+}
+
+int flcn_save_all_data_in_db(char *dir)
+{
+    sqlite3 *db;
+    flcn_save_in_db_all(db, dir);
     return 0;
 }
 
@@ -53,9 +61,16 @@ int flcn_check_valid_file(const char *file, struct stat st)
     return 0;
 }
 
-int flcn_check_reg_file(const struct stat *st)
+int flcn_check_reg_file(struct stat *st)
 {
     if (S_ISREG(st->st_mode) != 0)
+        return 1;
+    return 0;
+}
+
+int temp_flcn_check_dir(struct stat *st)
+{
+    if (S_ISDIR(st->st_mode) != 0)
         return 1;
     return 0;
 }
@@ -64,7 +79,7 @@ int flcn_verify_integrity(const char *file_name)
 {
     int vrfy = flcn_verify(file_name);
     if (vrfy == 0)
-        printf("\nFile Status: \033[32mOK\033[0m\n The file is intact");
+        printf("\nFile Status: \033[32mOK\033[0m\n The file is intact\n");
     if (vrfy == 1)
         printf("\nFile Status: \033[32mOK\033[0m\n (The file have a diff name, but the hash match)\n");
     if (vrfy == 2)

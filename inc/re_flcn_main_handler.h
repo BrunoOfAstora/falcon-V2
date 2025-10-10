@@ -30,7 +30,10 @@ void flcn_print_func_usage_msg();
 void flcn_print_usage_msg(char *name);
 int flcn_save_data_in_db(char *file);
 int flcn_check_valid_file(const char *file, struct stat st);
-int flcn_check_reg_file(const struct stat *st);
+int flcn_check_reg_file(struct stat *st);
 int flcn_verify_integrity(const char *file_name);
+int flcn_save_all_data_in_db(char *dir);
+
+int temp_flcn_check_dir(struct stat *st);
 
 #endif //FALCON_V2_RE_FLCN_MAIN_HANDLER_H

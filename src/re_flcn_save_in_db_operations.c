@@ -5,6 +5,7 @@
 #include "../inc/re_flcn_sqlite_operations_handler.h"
 #include "../inc/re_flcn_path_builder.h"
 #include "../inc/flcn-hashes-handler.h"
+#include "../inc/flcn_iterate_dir.h"
 #include <linux/limits.h>
 
 int re_save_in_db_create(sqlite3 **db)
@@ -39,7 +40,24 @@ int re_save_in_db_insert(sqlite3 *db, char *file)
     if ((flcn_dboperations_db_bind_text(stmt, 2, file_hash)) != SQLITE_OK) return -3;
     if ((flcn_dboperations_step_db(stmt)) != SQLITE_DONE) return -5;
     if ((flcn_dboperations_finalize_db_stmt(stmt)) != SQLITE_OK) return -6;
-    sqlite3_close(db);
-
+//    sqlite3_close(db);
     return SQLITE_OK;
+}
+
+int flcn_save_in_db_all(sqlite3 *db, const char *directory)
+{
+    char *f;
+    re_save_in_db_create(&db);
+    DIR *dir = opendir(directory);
+    int f_counter = 0;
+
+    while ((f = flcn_get_all_files_from_dir(dir)) != NULL)
+    {
+        printf("Saving %s in DataBase...\n", f);
+        re_save_in_db_insert(db, f);
+        f_counter++;
+    }
+    printf("\nFiles Saved %d.\n", f_counter);
+    sqlite3_close(db);
+    return 0;
 }

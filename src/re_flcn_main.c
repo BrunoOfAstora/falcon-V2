@@ -5,6 +5,7 @@
 #include "../inc/re_flcn_main.h"
 #include "../inc/re_flcn_compare_handler.h"
 #include "../inc/re_flcn_main_handler.h"
+#include "../inc/re_flcn_sqlite_operations_handler.h"
 
 int main(int argc, char *argv[])
 {
@@ -79,6 +80,12 @@ int main(int argc, char *argv[])
                 if (flcn_check_reg_file(&st) != 0)
                     return -3;
 
+                if (temp_flcn_check_dir(&st) == 0)
+                {
+                    flcn_save_all_data_in_db(optarg);
+                    printf("\nAll in dir saved\n");
+                }
+
                 if ((flcn_save_data_in_db(optarg)) != 0)
                 {
                     printf("\n Error saving file.\n");
@@ -102,7 +109,15 @@ int main(int argc, char *argv[])
 
         case 'v':
             {
-              flcn_verify_integrity(optarg);
+              const struct stat st;
+              if (flcn_check_reg_file(&st) == 0 && flcn_check_valid_file(optarg, st) == 0)
+                  flcn_verify_integrity(optarg);
+                else
+                {
+                    printf("File Don't Exist.\nPlease, check the file name.\n");
+                    return -1;
+                }
+
             }
         }
     }

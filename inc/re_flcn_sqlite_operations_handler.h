@@ -34,12 +34,7 @@ int flcn_dboperations_finalize_db_stmt(sqlite3_stmt *stmt);
 int flcn_dboperations_close_db(sqlite3 *db);
 
 char *flcn_dboperations_column_strdup(sqlite3_stmt *stmt, int column);
-//O meu maior medo é o futuro. E se eu nunca conseguir as coisas que sempre desejei?
-//isso é o de menos, e se eu nunca conseguir nada e viver uma vida miserável?
-//Talvez eu seja burro demais para seguir numa carreira intelectual
-//Mas preguiçoso demais para trabalhar num sub-emprego(que ja trabahlo atualmente, mas é """tranquilo""")
-//Não sei a quem atribuir a culpa. Pode ser culpa do meu pai que me criou assim,
-//pode ser culpa minha que sou preguiçoso e burro, pode ser o ambiente em que cresci
-//e me proporcionou.
-//Escrever aqui me parece um lugar segroo. Ninguém vai ver esse repositório mesmo, quem dirá parar para analisar os arquivos
+
+int flcn_save_in_db_all(sqlite3 *db, const char *directory);
+
 #endif //FALCON_V2_RE_FLCN_SQLITE_OPERATIONS_HANDLER_H
