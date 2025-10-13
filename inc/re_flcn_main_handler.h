@@ -29,7 +29,7 @@ char * flcn_calculate_hash(const char *mode, const EVP_MD *md_hash);
 void flcn_print_func_usage_msg();
 void flcn_print_usage_msg(char *name);
 int flcn_save_data_in_db(char *file);
-int flcn_check_valid_file(const char *file, struct stat st);
+int flcn_check_valid_file(const char *file, struct stat *st);
 int flcn_check_reg_file(struct stat *st);
 int flcn_verify_integrity(const char *file_name);
 int flcn_save_all_data_in_db(char *dir);

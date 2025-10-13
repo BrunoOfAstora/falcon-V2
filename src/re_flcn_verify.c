@@ -18,7 +18,7 @@ int flcn_verify(const char *file_name)
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
-    struct stat st;
+    struct stat *st = malloc(sizeof(struct stat));
 
     const char *full_file_path = flcn_get_real_path(file_name);
     const char *file_hash = flcn_build_hash(file_name, EVP_sha256());
@@ -29,7 +29,7 @@ int flcn_verify(const char *file_name)
 
     if (flcn_check_valid_file(file_name, st) != 0)
         return -1;
-    if (flcn_check_reg_file(&st) != 0)
+    if (flcn_check_reg_file(st) != 0)
         return -2;
 
     char db_path[PATH_MAX];

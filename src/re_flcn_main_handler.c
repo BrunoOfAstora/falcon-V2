@@ -54,25 +54,25 @@ int flcn_save_all_data_in_db(char *dir)
     return 0;
 }
 
-int flcn_check_valid_file(const char *file, struct stat st)
+int flcn_check_valid_file(const char *file, struct stat *st)
 {
-    if (stat(file, &st) != 0)
+    if (stat(file, st) != 0)
         return 1;
     return 0;
 }
 
 int flcn_check_reg_file(struct stat *st)
 {
-    if (S_ISREG(st->st_mode) != 0)
-        return 1;
-    return 0;
+    if (S_ISREG(st->st_mode))
+        return 0;
+    return 1;
 }
 
 int temp_flcn_check_dir(struct stat *st)
 {
-    if (S_ISDIR(st->st_mode) != 0)
-        return 1;
-    return 0;
+    if (S_ISDIR(st->st_mode))
+        return 0;
+    return 1;
 }
 
 int flcn_verify_integrity(const char *file_name)

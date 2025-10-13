@@ -8,6 +8,8 @@
 #include "../inc/flcn_iterate_dir.h"
 #include <linux/limits.h>
 
+#include "../inc/re_flcn_main_handler.h"
+
 int re_save_in_db_create(sqlite3 **db)
 {
     if (db == NULL)
@@ -49,12 +51,23 @@ int flcn_save_in_db_all(sqlite3 *db, const char *directory)
     char *f;
     re_save_in_db_create(&db);
     DIR *dir = opendir(directory);
-    int f_counter = 0;
+    int f_counter = 1;
 
     while ((f = flcn_get_all_files_from_dir(dir)) != NULL)
     {
-        printf("Saving %s in DataBase...\n", f);
-        re_save_in_db_insert(db, f);
+        struct stat st;
+        char path[PATH_MAX];
+
+        snprintf(path, sizeof(path), "%s%s", directory, f);
+
+        if (stat(path, &st) != 0)
+            continue;
+
+        if (temp_flcn_check_dir(&st) == 0)
+            continue;
+
+        printf("Saving %s in DataBase...\n", path);
+        re_save_in_db_insert(db, path);
         f_counter++;
     }
     printf("\nFiles Saved %d.\n", f_counter);
