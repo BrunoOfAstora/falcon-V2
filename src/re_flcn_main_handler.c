@@ -74,18 +74,3 @@ int temp_flcn_check_dir(struct stat *st)
         return 0;
     return 1;
 }
-
-int flcn_verify_integrity(const char *file_name)
-{
-    int vrfy = flcn_verify(file_name);
-    if (vrfy == 0)
-        printf("\nFile Status: \033[32mOK\033[0m\n The file is intact\n");
-    if (vrfy == 1)
-        printf("\nFile Status: \033[32mOK\033[0m\n (The file have a diff name, but the hash match)\n");
-    if (vrfy == 2)
-        printf("\nFile Status: \033[31mFailed\033[0m. \n The file is corrupted or it was modified.\n");
-    if (vrfy == 3)
-        printf("\031[32mFailed\033[0m: The file was not found in database.\nYou need to save the file information with the command: falcon -s <file>\n");
-
-    return vrfy;
-}

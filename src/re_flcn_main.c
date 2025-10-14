@@ -6,6 +6,7 @@
 #include "../inc/re_flcn_compare_handler.h"
 #include "../inc/re_flcn_main_handler.h"
 #include "../inc/re_flcn_sqlite_operations_handler.h"
+#include "../inc/re_flcn_verify.h"
 
 int main(int argc, char *argv[])
 {
@@ -113,8 +114,24 @@ int main(int argc, char *argv[])
             case 'v': {
                 struct stat *st = malloc(sizeof(struct stat));
 
-                if (flcn_check_valid_file(optarg, st) == 0 && flcn_check_reg_file(st) == 0) {
-                    flcn_verify_integrity(optarg);
+                if (flcn_check_valid_file(optarg, st) != 0)
+                {
+                    printf("Not a valid file.\n");
+                    free(st);
+                    return -1;
+                }
+
+                if (temp_flcn_check_dir(st) == 0)
+                {
+                    flcn_verify_all_files(optarg);
+                    free(st);
+                    return 0;
+                }
+
+                if (flcn_check_reg_file(st) == 0)
+                {
+                    if (flcn_verify(optarg) == -3)
+                        printf("\n\033[1;33m⚠ The file was not saved.\nUse: falcon -s <file>\033[0m\n");
                     free(st);
                 } else {
                     printf("File Don't Exist.\nPlease, check the file name.\n");
